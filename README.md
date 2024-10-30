@@ -1,4 +1,4 @@
-# Secure Sourcing Service Netowrk - S3N
+# S3N
 
 Basic repo demoing a simple AVS middleware with full eigenlayer integration, in rust.
 
