@@ -1,4 +1,4 @@
-//! Incredible Squaring AVS
+//! S3N
 /// Cli
 pub mod cli;
 /// Commands
