@@ -1,4 +1,4 @@
-//! Metrics for the incredible squaring task manager
+//! Metrics for the s3n task manager
 use metrics::{counter, describe_counter};
 
 /// Create a new instance of the metrics
@@ -35,7 +35,7 @@ mod tests {
         let socket: SocketAddr = "127.0.0.1:9091".parse().unwrap();
         init_registry(socket);
 
-        // Initialize  incredible squaring metrics
+        // Initialize  s3n metrics
         new();
 
         tokio::time::sleep(Duration::from_secs(1)).await;

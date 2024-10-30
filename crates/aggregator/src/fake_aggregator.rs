@@ -16,7 +16,7 @@ use eigen_utils::get_ws_provider;
 use futures_util::StreamExt;
 use s3n_bindings::S3NTaskManager::NewTaskCreated;
 use s3n_bindings::S3NTaskManager::{self, NonSignerStakesAndSignature};
-use s3n_config::IncredibleConfig;
+use s3n_config::S3NConfig;
 use jsonrpc_core::serde_json;
 use jsonrpc_core::{Error, IoHandler, Params, Value};
 use jsonrpc_http_server::{AccessControlAllowOrigin, DomainsValidation, ServerBuilder};
@@ -54,7 +54,7 @@ impl FakeAggregator {
     /// # Returns
     ///
     /// * `Self` - The FakeAggregator
-    pub async fn new(config: IncredibleConfig) -> Self {
+    pub async fn new(config: S3NConfig) -> Self {
         let avs_registry_chain_reader = AvsRegistryChainReader::new(
             get_test_logger(),
             config.registry_coordinator_addr().unwrap(),
@@ -414,7 +414,7 @@ mod tests {
     }
 
     async fn build_aggregator() -> FakeAggregator {
-        let mut s3n_config: IncredibleConfig =
+        let mut s3n_config: S3NConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_registry_coordinator_addr(
             get_s3n_registry_coordinator()

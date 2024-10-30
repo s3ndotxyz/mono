@@ -5,7 +5,7 @@ edition.workspace = true
 rust-version.workspace = true
 repository.workspace = true
 license.workspace = true
-description = " incredible squaring configuration "
+description = " s3n configuration "
     
 [lints]
 rust.missing_docs = "allow"

@@ -26,7 +26,7 @@ use futures_util::StreamExt;
 use s3n_bindings::S3NTaskManager::NewTaskCreated;
 use s3n_bindings::S3NTaskManager::{self, NonSignerStakesAndSignature};
 use s3n_chainio::AvsWriter;
-use s3n_config::IncredibleConfig;
+use s3n_config::S3NConfig;
 use jsonrpc_core::serde_json;
 use jsonrpc_core::{Error, IoHandler, Params, Value};
 use jsonrpc_http_server::{AccessControlAllowOrigin, DomainsValidation, ServerBuilder};
@@ -66,7 +66,7 @@ impl Aggregator {
     /// # Returns
     ///
     /// * `Self` - The aggregator
-    pub async fn new(config: IncredibleConfig) -> Result<Self, AggregatorError> {
+    pub async fn new(config: S3NConfig) -> Result<Self, AggregatorError> {
         let avs_registry_chain_reader = AvsRegistryChainReader::new(
             get_logger(),
             config.registry_coordinator_addr()?,

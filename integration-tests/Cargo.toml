@@ -6,7 +6,7 @@ rust-version = "1.79"
 repository = "https://github.com/0xZeroLabs/s3n"
 homepage = ""
 license = "Business Source License 1.1"
-description = "integration tests for incredible avs"
+description = "integration tests for s3n avs"
 
 [dependencies]
 alloy = { version = "0.1", features = ["full","signer-keystore","node-bindings"] }

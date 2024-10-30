@@ -1,4 +1,4 @@
-//! testing utils for incredible squaring rs
+//! testing utils for s3n rs
 use alloy::primitives::{address, Address};
 use eigen_testing_utils::anvil_constants::ANVIL_RPC_URL;
 use eigen_utils::binding::ContractsRegistry::{self, contractsReturn};
@@ -6,7 +6,7 @@ use eigen_utils::binding::ContractsRegistry::{self, contractsReturn};
 /// Local anvil ContractsRegistry which contains a mapping of all locally deployed EL contracts.
 pub const CONTRACTS_REGISTRY: Address = address!("5FbDB2315678afecb367f032d93F642f64180aa3");
 
-/// Get the incredible squaring registry coordinator address for anvil
+/// Get the s3n registry coordinator address for anvil
 pub async fn get_s3n_registry_coordinator() -> Address {
     let contracts_registry = ContractsRegistry::new(CONTRACTS_REGISTRY, (*ANVIL_RPC_URL).clone());
 
@@ -20,7 +20,7 @@ pub async fn get_s3n_registry_coordinator() -> Address {
     address
 }
 
-/// Get the incredible squaring operator state retriever address for anvil
+/// Get the s3n operator state retriever address for anvil
 pub async fn get_s3n_operator_state_retriever() -> Address {
     let contracts_registry = ContractsRegistry::new(CONTRACTS_REGISTRY, (*ANVIL_RPC_URL).clone());
 
@@ -34,7 +34,7 @@ pub async fn get_s3n_operator_state_retriever() -> Address {
     address
 }
 
-/// Get the incredible squaring task manager address for anvil
+/// Get the s3n task manager address for anvil
 pub async fn get_s3n_task_manager() -> Address {
     let contracts_registry = ContractsRegistry::new(CONTRACTS_REGISTRY, (*ANVIL_RPC_URL).clone());
 
@@ -48,7 +48,7 @@ pub async fn get_s3n_task_manager() -> Address {
     address
 }
 
-/// Get the incredible squaring strategy address for anvil
+/// Get the s3n strategy address for anvil
 pub async fn get_s3n_strategy_address() -> Address {
     let contracts_registry = ContractsRegistry::new(CONTRACTS_REGISTRY, (*ANVIL_RPC_URL).clone());
 

@@ -1,10 +1,10 @@
-//! integration tests for incredible squaring
+//! integration tests for s3n
 
 #[cfg(test)]
 mod tests {
 
     use eigen_logging::{init_logger, log_level::LogLevel};
-    use s3n_config::IncredibleConfig;
+    use s3n_config::S3NConfig;
     use std::{
         process::Stdio,
         sync::Arc,
@@ -55,13 +55,13 @@ mod tests {
     register_operator = true
     operator_pvt_key = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
     operator_to_avs_registration_sig_salt = "b345f720903a3ecfd59f3de456dd9d266c2ce540b05e8c909106962684d9afa3"
-    socket = "incredible"
+    socket = "s3n"
     quorum_number = "00"
     sig_expiry = "10"
     "#;
 
     async fn register_operator_with_el() {
-        let mut s3n_config: IncredibleConfig =
+        let mut s3n_config: S3NConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
 
         s3n_config.set_registry_coordinator_addr(
@@ -129,7 +129,7 @@ mod tests {
         register_operator_with_el().await;
         tokio::time::sleep(tokio::time::Duration::from_secs(2)).await;
 
-        let mut s3n_config: IncredibleConfig =
+        let mut s3n_config: S3NConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_aggregator_ip_address("127.0.0.1:8081".to_string());
         s3n_config.set_registry_coordinator_addr(
@@ -232,7 +232,7 @@ mod tests {
         register_operator_with_el().await;
         tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
 
-        let mut s3n_config: IncredibleConfig =
+        let mut s3n_config: S3NConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_aggregator_ip_address("127.0.0.1:8082".to_string());
 

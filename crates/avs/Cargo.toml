@@ -5,7 +5,7 @@ edition.workspace = true
 rust-version.workspace = true
 repository.workspace = true
 license.workspace = true
-description = "incredible avs builder "
+description = "s3n avs builder "
     
 [lints]
 workspace = true
@@ -18,7 +18,7 @@ tracing.workspace = true
 metrics.workspace = true
 metrics-util = "0.17.0"
 
-#incredible
+#s3n
 s3n-config.workspace = true
 s3n-operator.workspace = true
 s3n-challenger.workspace = true

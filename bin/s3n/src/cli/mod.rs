@@ -1,10 +1,10 @@
 use crate::commands::avs::{AvsCommand, NoArgs};
 use clap::{self, Args, Parser, Subcommand};
-use s3n_cli_runner::IncredibleRunner;
+use s3n_cli_runner::S3NRunner;
 use std::ffi::OsString;
 use std::fmt;
 
-/// Incredible squaring main entry point interface
+/// S3N squaring main entry point interface
 #[derive(Debug, Parser)]
 #[command(author, about = "S3N", long_about = None)]
 pub struct Cli<Ext: clap::Args + fmt::Debug = NoArgs> {
@@ -31,7 +31,7 @@ impl Cli {
 impl<Ext: clap::Args + fmt::Debug + Send + Sync + 'static> Cli<Ext> {
     /// Execute the configured CLI command.
     pub fn start(self) -> eyre::Result<()> {
-        let runner = IncredibleRunner::default();
+        let runner = S3NRunner::default();
 
         match self.command {
             Commands::Avs(command) => {

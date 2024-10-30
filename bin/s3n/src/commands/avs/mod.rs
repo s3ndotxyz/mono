@@ -14,7 +14,7 @@ use eigen_testing_utils::anvil_constants::{
 };
 use eigen_types::operator::Operator;
 use s3n_avs::builder::{AvsBuilder, DefaultAvsLauncher, LaunchAvs};
-use s3n_config::IncredibleConfig;
+use s3n_config::S3NConfig;
 use s3n_testing_utils::{
     get_s3n_operator_state_retriever, get_s3n_registry_coordinator,
     get_s3n_strategy_address, get_s3n_task_manager,
@@ -36,7 +36,7 @@ pub struct NoArgs;
 use std::path::PathBuf;
 
 //const ANVIL_HTTP_UR: &str = "http://localhost:8545";
-/// Starts incredible squaring
+/// Starts s3n
 #[derive(Debug, Parser)]
 pub struct AvsCommand<Ext: Args + fmt::Debug = NoArgs> {
     /// The EVM chain ID.
@@ -261,7 +261,7 @@ impl<Ext: clap::Args + fmt::Debug + Send + Sync + 'static> AvsCommand<Ext> {
         debug!("ecdsa key password:{:?}", self.ecdsa_keystore_password);
         debug!("bls keystore path : {:?}", self.bls_keystore_path);
         debug!("bls keystore password : {:?}", self.bls_keystore_password);
-        let mut config = IncredibleConfig::default();
+        let mut config = S3NConfig::default();
 
         let Self {
             ws_rpc_url,
@@ -295,7 +295,7 @@ impl<Ext: clap::Args + fmt::Debug + Send + Sync + 'static> AvsCommand<Ext> {
             ..
         } = *self;
         if let Some(config_path) = config_path {
-            config = IncredibleConfig::load(&config_path)?;
+            config = S3NConfig::load(&config_path)?;
         } else {
             config.set_node_api_port_address(node_api_address);
             config.set_metrics_port_address(metrics_address);

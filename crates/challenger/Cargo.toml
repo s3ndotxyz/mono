@@ -5,7 +5,7 @@ edition.workspace = true
 rust-version.workspace = true
 repository.workspace = true
 license.workspace = true
-description = "incredible squaring challenger "
+description = "s3n challenger "
     
 [lints]
 workspace = true
@@ -21,7 +21,7 @@ tokio.workspace = true
 tracing.workspace = true
 thiserror.workspace = true
 toml.workspace = true
-#incredible
+#s3n
 s3n-testing-utils.workspace = true
 s3n-chainio.workspace = true
 

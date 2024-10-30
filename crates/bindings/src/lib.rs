@@ -1,4 +1,4 @@
-//! Bindings for the Incredible Squaring contracts
+//! Bindings for the S3N Squaring contracts
 use alloy::sol;
 use serde::{Deserialize, Serialize};
 

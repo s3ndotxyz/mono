@@ -16,7 +16,7 @@ use s3n_bindings::S3NTaskManager::{
     TaskResponseMetadata,
 };
 use s3n_chainio::AvsWriter;
-use s3n_config::IncredibleConfig;
+use s3n_config::S3NConfig;
 use tracing::info;
 
 /// Task Response Data
@@ -43,7 +43,7 @@ pub struct Challenger {
 
 impl Challenger {
     /// New instance of Challenger
-    pub async fn build(config: IncredibleConfig) -> Result<Self, ChallengerError> {
+    pub async fn build(config: S3NConfig) -> Result<Self, ChallengerError> {
         let registry_coordinator_address = config.registry_coordinator_addr()?;
         let avs_writer = AvsWriter::new(
             registry_coordinator_address,
@@ -322,7 +322,7 @@ signer = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
 
     /// Build challenger
     pub(crate) async fn build_challenger() -> Result<Challenger, ChallengerError> {
-        let mut config: IncredibleConfig = toml::from_str(S3N_CONFIG_FILE)?;
+        let mut config: S3NConfig = toml::from_str(S3N_CONFIG_FILE)?;
         config.set_registry_coordinator_addr(
             get_s3n_registry_coordinator()
                 .await
@@ -373,7 +373,7 @@ signer = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
 
     #[tokio::test]
     async fn test_call_challenge() {
-        let mut config: IncredibleConfig = toml::from_str(S3N_CONFIG_FILE).unwrap();
+        let mut config: S3NConfig = toml::from_str(S3N_CONFIG_FILE).unwrap();
         config.set_registry_coordinator_addr(
             get_s3n_registry_coordinator()
                 .await
@@ -433,7 +433,7 @@ signer = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
 
     #[tokio::test]
     pub(crate) async fn test_process_task_response_log() {
-        let mut config: IncredibleConfig = toml::from_str(S3N_CONFIG_FILE).unwrap();
+        let mut config: S3NConfig = toml::from_str(S3N_CONFIG_FILE).unwrap();
         config.set_registry_coordinator_addr(
             get_s3n_registry_coordinator()
                 .await

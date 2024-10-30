@@ -5,7 +5,7 @@ edition.workspace = true
 rust-version.workspace = true
 repository.workspace = true
 license.workspace = true
-description = "incredible squaring alloy bindings "
+description = "s3n alloy bindings "
     
 [lints]
 workspace = true

@@ -25,7 +25,7 @@ operator_pvt_key = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4
 operator_to_avs_registration_sig_salt = "b345f720903a3ecfd59f3de456dd9d266c2ce540b05e8c909106962684d9afa3"
 quorum_number = "00"
 sig_expiry = "10"
-socket = "incredible"
+socket = "s3n"
 
 [metrics_config]
 port_address = "127.0.0.1:9001"

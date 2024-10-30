@@ -3,7 +3,7 @@ use eigen_nodeapi::{create_server, NodeApi};
 use futures::TryFutureExt;
 use s3n_aggregator::Aggregator;
 use s3n_challenger::Challenger;
-use s3n_config::IncredibleConfig;
+use s3n_config::S3NConfig;
 use s3n_operator::builder::OperatorBuilder;
 use s3n_task_generator::TaskManager;
 use ntex::rt::System;
@@ -18,12 +18,12 @@ pub trait LaunchAvs<T: Send + 'static> {
 /// Avs builder
 #[derive(Debug)]
 pub struct AvsBuilder {
-    config: IncredibleConfig,
+    config: S3NConfig,
 }
 
 impl AvsBuilder {
     /// new
-    pub fn new(config: IncredibleConfig) -> Self {
+    pub fn new(config: S3NConfig) -> Self {
         Self { config }
     }
 }

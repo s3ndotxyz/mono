@@ -11,7 +11,7 @@ use std::path::PathBuf;
 #[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone)]
 #[serde(default)]
 #[allow(missing_docs)]
-pub struct IncredibleConfig {
+pub struct S3NConfig {
     rpc_config: RpcConfig,
 
     ecdsa_config: EcdsaConfig,
@@ -26,7 +26,7 @@ pub struct IncredibleConfig {
 
     operator_registration_config: OperatorRegistrationConfig,
 
-    s3n_contracts_config: IncredibleContractsConfig,
+    s3n_contracts_config: S3NContractsConfig,
 
     task_manager_config: TaskManagerConfig,
 
@@ -52,7 +52,7 @@ pub struct RpcConfig {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone)]
-pub struct IncredibleContractsConfig {
+pub struct S3NContractsConfig {
     pub task_manager_addr: String,
 
     pub service_manager_addr: String,
@@ -127,14 +127,14 @@ pub struct EcdsaConfig {
     pub keystore_password: String,
 }
 
-impl IncredibleConfig {
+impl S3NConfig {
     /// Load the configuration from the given path.
     pub fn load(path: &PathBuf) -> Result<Self, std::io::Error> {
         confy::load_path(path).map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))
     }
 
     /// Save the configuration to the given path.
-    pub fn save(config: IncredibleConfig, path: &PathBuf) -> Result<(), std::io::Error> {
+    pub fn save(config: S3NConfig, path: &PathBuf) -> Result<(), std::io::Error> {
         confy::store_path(path, config)
             .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))
     }
@@ -384,7 +384,7 @@ mod tests {
     use crate::AggregatorConfig;
     use crate::ELConfig;
     use crate::EcdsaConfig;
-    use crate::IncredibleConfig;
+    use crate::S3NConfig;
     use crate::OperatorConfig;
     use crate::OperatorRegistrationConfig;
     use crate::RpcConfig;
@@ -419,12 +419,12 @@ mod tests {
 
     #[test]
     fn test_s3n_config() {
-        with_tempdir("Incredibleconfig-load", |config_path| {
-            let config = IncredibleConfig::default();
-            IncredibleConfig::save(config.clone(), &PathBuf::from(config_path)).unwrap();
+        with_tempdir("S3Nconfig-load", |config_path| {
+            let config = S3NConfig::default();
+            S3NConfig::save(config.clone(), &PathBuf::from(config_path)).unwrap();
 
-            let loaded_config: IncredibleConfig =
-                IncredibleConfig::load(&PathBuf::from(config_path)).unwrap();
+            let loaded_config: S3NConfig =
+                S3NConfig::load(&PathBuf::from(config_path)).unwrap();
             assert_eq!(config, loaded_config);
         })
     }
@@ -478,7 +478,7 @@ mod tests {
         keystore_password = "eigenlovesblskeystorepassword"
         "#;
 
-        let s3n_config: IncredibleConfig = toml::from_str(s3n_config_file).unwrap();
+        let s3n_config: S3NConfig = toml::from_str(s3n_config_file).unwrap();
         assert_eq!(
             s3n_config.bls_keystore_password(),
             "eigenlovesblskeystorepassword"
@@ -498,7 +498,7 @@ mod tests {
             0x02, 0x02, 0x02, 0x02,
         ]);
 
-        let mut s3n_config = IncredibleConfig::default();
+        let mut s3n_config = S3NConfig::default();
 
         s3n_config.set_operator_id(id.to_string());
         assert_eq!(s3n_config.get_operator_id().unwrap(), bytes);
@@ -539,7 +539,7 @@ mod tests {
 
         let s3n_config_file = r#"
         "#;
-        let mut s3n_config: IncredibleConfig =
+        let mut s3n_config: S3NConfig =
             toml::from_str(s3n_config_file).unwrap();
         s3n_config.set_registry_coordinator_addr(
             get_s3n_registry_coordinator()
@@ -577,7 +577,7 @@ mod tests {
         ip_address = "https://localhost:3001"
         "#;
 
-        let s3n_config: IncredibleConfig = toml::from_str(s3n_config_file).unwrap();
+        let s3n_config: S3NConfig = toml::from_str(s3n_config_file).unwrap();
 
         assert_eq!(
             s3n_config.aggregator_ip_addr(),
@@ -588,24 +588,24 @@ mod tests {
     #[test]
     fn test_ecdsa_config() {
         let _config = r#"
-        keystore_path = "incredibleecdsakeystorepath"
+        keystore_path = "s3necdsakeystorepath"
         keystore_password  = "eigenlovesecdsakeystore"
         "#;
 
         let ecdsa_config: EcdsaConfig = toml::from_str(_config).unwrap();
 
         assert_eq!(ecdsa_config.keystore_password, "eigenlovesecdsakeystore");
-        assert_eq!(ecdsa_config.keystore_path, "incredibleecdsakeystorepath");
+        assert_eq!(ecdsa_config.keystore_path, "s3necdsakeystorepath");
 
         let s3n_config_file = r#"
         [ecdsa_config]
-        keystore_path = "incredibleecdsakeystorepath"
+        keystore_path = "s3necdsakeystorepath"
         keystore_password  = "eigenlovesecdsakeystore"
         "#;
-        let s3n_config: IncredibleConfig = toml::from_str(s3n_config_file).unwrap();
+        let s3n_config: S3NConfig = toml::from_str(s3n_config_file).unwrap();
         assert_eq!(
             s3n_config.ecdsa_keystore_path(),
-            "incredibleecdsakeystorepath"
+            "s3necdsakeystorepath"
         );
 
         assert_eq!(
@@ -642,7 +642,7 @@ mod tests {
         quorum_number = "0x40"
         sig_expiry = "3333"
         "#;
-        let s3n_config: IncredibleConfig = toml::from_str(s3n_config_file).unwrap();
+        let s3n_config: S3NConfig = toml::from_str(s3n_config_file).unwrap();
         assert_eq!(
             s3n_config
                 .operator_to_avs_registration_sig_salt()

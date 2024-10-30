@@ -19,7 +19,7 @@ use eyre::Result;
 use futures_util::StreamExt;
 use s3n_aggregator::rpc_server::SignedTaskResponse;
 use s3n_bindings::S3NTaskManager::{self, NewTaskCreated, TaskResponse};
-use s3n_config::IncredibleConfig;
+use s3n_config::S3NConfig;
 use rust_bls_bn254::keystores::base_keystore::Keystore;
 use tracing::info;
 
@@ -45,7 +45,7 @@ pub struct OperatorBuilder {
 
 impl OperatorBuilder {
     /// Build the Operator Builder
-    pub async fn build(config: IncredibleConfig) -> Result<Self, OperatorError> {
+    pub async fn build(config: S3NConfig) -> Result<Self, OperatorError> {
         let _instrumented_client = InstrumentedClient::new(&config.http_rpc_url()).await;
         // Read BlsKey from path
         let keystore = Keystore::from_file(&config.bls_keystore_path())?
@@ -195,7 +195,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_bls_keystore() {
-        let mut s3n_config: IncredibleConfig =
+        let mut s3n_config: S3NConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_registry_coordinator_addr(
             get_s3n_registry_coordinator()
@@ -239,7 +239,7 @@ mod tests {
             },
         };
 
-        let mut s3n_config: IncredibleConfig =
+        let mut s3n_config: S3NConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_registry_coordinator_addr(
             get_s3n_registry_coordinator()
@@ -261,7 +261,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_build_operator() {
-        let mut s3n_config: IncredibleConfig =
+        let mut s3n_config: S3NConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_registry_coordinator_addr(
             get_s3n_registry_coordinator()
@@ -283,7 +283,7 @@ mod tests {
             numberSquared: U256::from(16),
         };
 
-        let mut s3n_config: IncredibleConfig =
+        let mut s3n_config: S3NConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_registry_coordinator_addr(
             get_s3n_registry_coordinator()

@@ -2,12 +2,12 @@
 use std::{future::Future, pin::pin};
 use tracing::trace;
 
-/// Incredible Runner
+/// S3N Runner
 #[derive(Clone, Debug, Default)]
 #[non_exhaustive]
-pub struct IncredibleRunner;
+pub struct S3NRunner;
 
-impl IncredibleRunner {
+impl S3NRunner {
     /// Run until ctrl c
     pub fn run_blocking_until_ctrl_c<F, E>(self, fut: F) -> Result<(), E>
     where
@@ -63,10 +63,10 @@ where
 
         tokio::select! {
             _ = ctrl_c => {
-                trace!(target: "incredible::cli", "Received ctrl-c");
+                trace!(target: "s3n::cli", "Received ctrl-c");
             },
             _ = sigterm => {
-                trace!(target: "incredible::cli", "Received SIGTERM");
+                trace!(target: "s3n::cli", "Received SIGTERM");
             },
             res = fut => res?,
         }
@@ -79,7 +79,7 @@ where
 
         tokio::select! {
             _ = ctrl_c => {
-                trace!(target: "incredible::cli", "Received ctrl-c");
+                trace!(target: "s3n::cli", "Received ctrl-c");
             },
             res = fut => res?,
         }
