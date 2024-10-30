@@ -6,14 +6,14 @@ sol!(
     #[allow(missing_docs)]
     #[sol(rpc)]
     #[derive(Debug, Serialize, Deserialize)]
-    IncredibleSquaringTaskManager,
-    "IncredibleSquaringTaskManager.json"
+    S3NTaskManager,
+    "S3NTaskManager.json"
 );
 
 sol!(
     #[allow(missing_docs)]
     #[sol(rpc)]
     #[derive(Debug, Serialize, Deserialize)]
-    IncredibleSquaringServiceManager,
-    "IncredibleSquaringServiceManager.json"
+    S3NServiceManager,
+    "S3NServiceManager.json"
 );

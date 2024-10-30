@@ -4,7 +4,7 @@ use alloy::{
     rpc::types::TransactionReceipt,
 };
 use eigen_utils::get_signer;
-use s3n_bindings::IncredibleSquaringTaskManager::{
+use s3n_bindings::S3NTaskManager::{
     self, NonSignerStakesAndSignature, Task, TaskResponse,
 };
 use lazy_static::lazy_static;
@@ -38,7 +38,7 @@ impl TaskManager {
     /// Creates new task every 10 seconds
     pub async fn start(&self) -> eyre::Result<()> {
         info!("Started creating new task ");
-        let task_manager_contract = IncredibleSquaringTaskManager::new(
+        let task_manager_contract = S3NTaskManager::new(
             self.task_manager_address,
             get_signer(self.signer.clone(), &self.rpc_url),
         );
@@ -80,7 +80,7 @@ impl TaskManager {
         &self,
         task_num: U256,
     ) -> eyre::Result<TransactionReceipt, eyre::Error> {
-        let task_manager_contract = IncredibleSquaringTaskManager::new(
+        let task_manager_contract = S3NTaskManager::new(
             self.task_manager_address,
             get_signer(self.signer.clone(), &self.rpc_url),
         );
@@ -118,7 +118,7 @@ impl TaskManager {
         task_response: TaskResponse,
         non_signer_stakes_and_signature: NonSignerStakesAndSignature,
     ) -> eyre::Result<TransactionReceipt, eyre::Error> {
-        let task_manager_contract = IncredibleSquaringTaskManager::new(
+        let task_manager_contract = S3NTaskManager::new(
             self.task_manager_address,
             get_signer(self.signer.clone(), &self.rpc_url),
         );

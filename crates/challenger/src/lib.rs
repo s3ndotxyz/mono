@@ -11,7 +11,7 @@ use alloy_provider::Provider;
 use error::ChallengerError;
 use eyre::Result;
 use futures_util::stream::StreamExt;
-use s3n_bindings::IncredibleSquaringTaskManager::{
+use s3n_bindings::S3NTaskManager::{
     respondToTaskCall, G1Point, NewTaskCreated, Task, TaskResponded, TaskResponse,
     TaskResponseMetadata,
 };

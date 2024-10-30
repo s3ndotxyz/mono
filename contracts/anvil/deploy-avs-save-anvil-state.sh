@@ -29,7 +29,7 @@ trap 'cleanup $LINENO "$BASH_COMMAND"' EXIT
 start_anvil_docker $parent_path/eigenlayer-deployed-anvil-state.json $parent_path/avs-and-eigenlayer-deployed-anvil-state.json
 
 cd ../
-forge script script/IncredibleSquaringDeployer.s.sol --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast -v
+forge script script/S3NDeployer.s.sol --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast -v
 
 # we also do this here to make sure the operator has funds to register with the eigenlayer contracts
 # cast send 0x860B6912C2d0337ef05bbC89b0C2CB6CbAEAB4A5 --value 10ether --private-key 0x2a871d0798f97d79848a013d4936a73bf4cc922c825d33c1cf7073dff6d409c6

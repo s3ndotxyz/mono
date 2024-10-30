@@ -18,9 +18,9 @@ import {IndexRegistry} from "@eigenlayer-middleware/src/IndexRegistry.sol";
 import {StakeRegistry} from "@eigenlayer-middleware/src/StakeRegistry.sol";
 import "@eigenlayer-middleware/src/OperatorStateRetriever.sol";
 
-import {IncredibleSquaringServiceManager, IServiceManager} from "../src/IncredibleSquaringServiceManager.sol";
-import {IncredibleSquaringTaskManager} from "../src/IncredibleSquaringTaskManager.sol";
-import {IIncredibleSquaringTaskManager} from "../src/IIncredibleSquaringTaskManager.sol";
+import {S3NServiceManager, IServiceManager} from "../src/S3NServiceManager.sol";
+import {S3NTaskManager} from "../src/S3NTaskManager.sol";
+import {IS3NTaskManager} from "../src/IS3NTaskManager.sol";
 import "../src/ERC20Mock.sol";
 
 import {Utils} from "./utils/Utils.sol";
@@ -34,7 +34,7 @@ import {ContractsRegistry} from "../src/ContractsRegistry.sol";
 
 // # To deploy and verify our contract
 // forge script script/CredibleSquaringDeployer.s.sol:CredibleSquaringDeployer --rpc-url $RPC_URL  --private-key $PRIVATE_KEY --broadcast -vvvv
-contract IncredibleSquaringDeployer is Script, Utils {
+contract S3NDeployer is Script, Utils {
     // DEPLOYMENT CONSTANTS
     uint256 public constant QUORUM_THRESHOLD_PERCENTAGE = 100;
     uint32 public constant TASK_RESPONSE_WINDOW_BLOCK = 30;
@@ -52,8 +52,8 @@ contract IncredibleSquaringDeployer is Script, Utils {
     StrategyBaseTVLLimits public erc20MockStrategy;
 
     // Credible Squaring contracts
-    ProxyAdmin public incredibleSquaringProxyAdmin;
-    PauserRegistry public incredibleSquaringPauserReg;
+    ProxyAdmin public S3NProxyAdmin;
+    PauserRegistry public S3NPauserReg;
 
     regcoord.RegistryCoordinator public registryCoordinator;
     regcoord.IRegistryCoordinator public registryCoordinatorImplementation;
@@ -69,12 +69,12 @@ contract IncredibleSquaringDeployer is Script, Utils {
 
     OperatorStateRetriever public operatorStateRetriever;
 
-    IncredibleSquaringServiceManager public incredibleSquaringServiceManager;
-    IServiceManager public incredibleSquaringServiceManagerImplementation;
+    S3NServiceManager public S3NServiceManager;
+    IServiceManager public S3NServiceManagerImplementation;
 
-    IncredibleSquaringTaskManager public incredibleSquaringTaskManager;
-    IIncredibleSquaringTaskManager
-        public incredibleSquaringTaskManagerImplementation;
+    S3NTaskManager public S3NTaskManager;
+    IS3NTaskManager
+        public S3NTaskManagerImplementation;
 
     function run() external {
         // Eigenlayer contracts
@@ -176,7 +176,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
         IDelegationManager delegationManager,
         IAVSDirectory avsDirectory,
         IStrategy strat,
-        address incredibleSquaringCommunityMultisig,
+        address S3NCommunityMultisig,
         address credibleSquaringPauser
     ) internal {
         // Adding this as a temporary fix to make the rest of the script work with a single strategy
@@ -185,16 +185,16 @@ contract IncredibleSquaringDeployer is Script, Utils {
         uint numStrategies = deployedStrategyArray.length;
 
         // deploy proxy admin for ability to upgrade proxy contracts
-        incredibleSquaringProxyAdmin = new ProxyAdmin();
+        S3NProxyAdmin = new ProxyAdmin();
 
         // deploy pauser registry
         {
             address[] memory pausers = new address[](2);
             pausers[0] = credibleSquaringPauser;
-            pausers[1] = incredibleSquaringCommunityMultisig;
-            incredibleSquaringPauserReg = new PauserRegistry(
+            pausers[1] = S3NCommunityMultisig;
+            S3NPauserReg = new PauserRegistry(
                 pausers,
-                incredibleSquaringCommunityMultisig
+                S3NCommunityMultisig
             );
         }
 
@@ -206,34 +206,34 @@ contract IncredibleSquaringDeployer is Script, Utils {
          * First, deploy upgradeable proxy contracts that **will point** to the implementations. Since the implementation contracts are
          * not yet deployed, we give these proxies an empty contract as the initial implementation, to act as if they have no code.
          */
-        incredibleSquaringServiceManager = IncredibleSquaringServiceManager(
+        S3NServiceManager = S3NServiceManager(
             address(
                 new TransparentUpgradeableProxy(
                     address(emptyContract),
-                    address(incredibleSquaringProxyAdmin),
+                    address(S3NProxyAdmin),
                     ""
                 )
             )
         );
-        contractsRegistry.registerContract("s3n_service_manager", address(incredibleSquaringServiceManager));
+        contractsRegistry.registerContract("s3n_service_manager", address(S3NServiceManager));
 
-        incredibleSquaringTaskManager = IncredibleSquaringTaskManager(
+        S3NTaskManager = S3NTaskManager(
             address(
                 new TransparentUpgradeableProxy(
                     address(emptyContract),
-                    address(incredibleSquaringProxyAdmin),
+                    address(S3NProxyAdmin),
                     ""
                 )
             )
         );
 
-        contractsRegistry.registerContract("s3n_task_manager", address(incredibleSquaringTaskManager));
+        contractsRegistry.registerContract("s3n_task_manager", address(S3NTaskManager));
         
         registryCoordinator = regcoord.RegistryCoordinator(
             address(
                 new TransparentUpgradeableProxy(
                     address(emptyContract),
-                    address(incredibleSquaringProxyAdmin),
+                    address(S3NProxyAdmin),
                     ""
                 )
             )
@@ -244,7 +244,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
             address(
                 new TransparentUpgradeableProxy(
                     address(emptyContract),
-                    address(incredibleSquaringProxyAdmin),
+                    address(S3NProxyAdmin),
                     ""
                 )
             )
@@ -253,7 +253,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
             address(
                 new TransparentUpgradeableProxy(
                     address(emptyContract),
-                    address(incredibleSquaringProxyAdmin),
+                    address(S3NProxyAdmin),
                     ""
                 )
             )
@@ -262,7 +262,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
             address(
                 new TransparentUpgradeableProxy(
                     address(emptyContract),
-                    address(incredibleSquaringProxyAdmin),
+                    address(S3NProxyAdmin),
                     ""
                 )
             )
@@ -281,7 +281,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
                 delegationManager
             );
 
-            incredibleSquaringProxyAdmin.upgrade(
+            S3NProxyAdmin.upgrade(
                 TransparentUpgradeableProxy(payable(address(stakeRegistry))),
                 address(stakeRegistryImplementation)
             );
@@ -290,7 +290,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
                 registryCoordinator
             );
 
-            incredibleSquaringProxyAdmin.upgrade(
+            S3NProxyAdmin.upgrade(
                 TransparentUpgradeableProxy(payable(address(blsApkRegistry))),
                 address(blsApkRegistryImplementation)
             );
@@ -299,14 +299,14 @@ contract IncredibleSquaringDeployer is Script, Utils {
                 registryCoordinator
             );
 
-            incredibleSquaringProxyAdmin.upgrade(
+            S3NProxyAdmin.upgrade(
                 TransparentUpgradeableProxy(payable(address(indexRegistry))),
                 address(indexRegistryImplementation)
             );
         }
 
         registryCoordinatorImplementation = new regcoord.RegistryCoordinator(
-            incredibleSquaringServiceManager,
+            S3NServiceManager,
             regcoord.IStakeRegistry(address(stakeRegistry)),
             regcoord.IBLSApkRegistry(address(blsApkRegistry)),
             regcoord.IIndexRegistry(address(indexRegistry))
@@ -352,7 +352,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
                         });
                 }
             }
-            incredibleSquaringProxyAdmin.upgradeAndCall(
+            S3NProxyAdmin.upgradeAndCall(
                 TransparentUpgradeableProxy(
                     payable(address(registryCoordinator))
                 ),
@@ -360,10 +360,10 @@ contract IncredibleSquaringDeployer is Script, Utils {
                 abi.encodeWithSelector(
                     regcoord.RegistryCoordinator.initialize.selector,
                     // we set churnApprover and ejector to communityMultisig because we don't need them
-                    incredibleSquaringCommunityMultisig,
-                    incredibleSquaringCommunityMultisig,
-                    incredibleSquaringCommunityMultisig,
-                    incredibleSquaringPauserReg,
+                    S3NCommunityMultisig,
+                    S3NCommunityMultisig,
+                    S3NCommunityMultisig,
+                    S3NPauserReg,
                     0, // 0 initialPausedStatus means everything unpaused
                     quorumsOperatorSetParams,
                     quorumsMinimumStake,
@@ -372,35 +372,35 @@ contract IncredibleSquaringDeployer is Script, Utils {
             );
         }
 
-        incredibleSquaringServiceManagerImplementation = new IncredibleSquaringServiceManager(
+        S3NServiceManagerImplementation = new S3NServiceManager(
             avsDirectory,
             registryCoordinator,
             stakeRegistry,
-            incredibleSquaringTaskManager
+            S3NTaskManager
         );
         // Third, upgrade the proxy contracts to use the correct implementation contracts and initialize them.
-        incredibleSquaringProxyAdmin.upgrade(
+        S3NProxyAdmin.upgrade(
             TransparentUpgradeableProxy(
-                payable(address(incredibleSquaringServiceManager))
+                payable(address(S3NServiceManager))
             ),
-            address(incredibleSquaringServiceManagerImplementation)
+            address(S3NServiceManagerImplementation)
         );
 
-        incredibleSquaringTaskManagerImplementation = new IncredibleSquaringTaskManager(
+        S3NTaskManagerImplementation = new S3NTaskManager(
             registryCoordinator,
             TASK_RESPONSE_WINDOW_BLOCK
         );
 
         // Third, upgrade the proxy contracts to use the correct implementation contracts and initialize them.
-        incredibleSquaringProxyAdmin.upgradeAndCall(
+        S3NProxyAdmin.upgradeAndCall(
             TransparentUpgradeableProxy(
-                payable(address(incredibleSquaringTaskManager))
+                payable(address(S3NTaskManager))
             ),
-            address(incredibleSquaringTaskManagerImplementation),
+            address(S3NTaskManagerImplementation),
             abi.encodeWithSelector(
-                incredibleSquaringTaskManager.initialize.selector,
-                incredibleSquaringPauserReg,
-                incredibleSquaringCommunityMultisig,
+                S3NTaskManager.initialize.selector,
+                S3NPauserReg,
+                S3NCommunityMultisig,
                 AGGREGATOR_ADDR,
                 TASK_GENERATOR_ADDR
             )
@@ -423,22 +423,22 @@ contract IncredibleSquaringDeployer is Script, Utils {
         vm.serializeAddress(
             deployed_addresses,
             "credibleSquaringServiceManager",
-            address(incredibleSquaringServiceManager)
+            address(S3NServiceManager)
         );
         vm.serializeAddress(
             deployed_addresses,
             "credibleSquaringServiceManagerImplementation",
-            address(incredibleSquaringServiceManagerImplementation)
+            address(S3NServiceManagerImplementation)
         );
         vm.serializeAddress(
             deployed_addresses,
             "credibleSquaringTaskManager",
-            address(incredibleSquaringTaskManager)
+            address(S3NTaskManager)
         );
         vm.serializeAddress(
             deployed_addresses,
             "credibleSquaringTaskManagerImplementation",
-            address(incredibleSquaringTaskManagerImplementation)
+            address(S3NTaskManagerImplementation)
         );
         vm.serializeAddress(
             deployed_addresses,

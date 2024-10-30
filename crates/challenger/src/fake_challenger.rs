@@ -6,7 +6,7 @@ use alloy::{
     primitives::TxHash,
     rpc::types::{serde_helpers::OtherFields, AccessList, Transaction},
 };
-use s3n_bindings::IncredibleSquaringTaskManager::{
+use s3n_bindings::S3NTaskManager::{
     respondToTaskCall, G1Point, Task, TaskResponded,
 };
 use s3n_chainio::fake_avs_writer::FakeAvsWriter;

@@ -23,8 +23,8 @@ use eigen_types::avs::TaskResponseDigest;
 use eigen_utils::get_ws_provider;
 pub use error::AggregatorError;
 use futures_util::StreamExt;
-use s3n_bindings::IncredibleSquaringTaskManager::NewTaskCreated;
-use s3n_bindings::IncredibleSquaringTaskManager::{self, NonSignerStakesAndSignature};
+use s3n_bindings::S3NTaskManager::NewTaskCreated;
+use s3n_bindings::S3NTaskManager::{self, NonSignerStakesAndSignature};
 use s3n_chainio::AvsWriter;
 use s3n_config::IncredibleConfig;
 use jsonrpc_core::serde_json;
@@ -50,10 +50,10 @@ pub struct Aggregator {
         AvsRegistryServiceChainCaller<AvsRegistryChainReader, OperatorInfoServiceInMemory>,
     >,
     /// HashMap to store tasks
-    pub tasks: HashMap<u32, IncredibleSquaringTaskManager::Task>,
+    pub tasks: HashMap<u32, S3NTaskManager::Task>,
     /// HashMap to store task responses
     pub tasks_responses:
-        HashMap<u32, HashMap<TaskResponseDigest, IncredibleSquaringTaskManager::TaskResponse>>,
+        HashMap<u32, HashMap<TaskResponseDigest, S3NTaskManager::TaskResponse>>,
 }
 
 impl Aggregator {
@@ -277,7 +277,7 @@ impl Aggregator {
         let task_index = signed_task_response.task_response.referenceTaskIndex;
 
         let task_response_digest =
-            alloy::primitives::keccak256(IncredibleSquaringTaskManager::TaskResponse::abi_encode(
+            alloy::primitives::keccak256(S3NTaskManager::TaskResponse::abi_encode(
                 &signed_task_response.task_response,
             ));
 
@@ -331,27 +331,27 @@ impl Aggregator {
         &self,
         response: BlsAggregationServiceResponse,
     ) -> Result<(), AggregatorError> {
-        let mut non_signer_pub_keys = Vec::<IncredibleSquaringTaskManager::G1Point>::new();
+        let mut non_signer_pub_keys = Vec::<S3NTaskManager::G1Point>::new();
         for pub_key in response.non_signers_pub_keys_g1.iter() {
             let g1 = convert_to_g1_point(pub_key.g1())?;
-            non_signer_pub_keys.push(IncredibleSquaringTaskManager::G1Point { X: g1.X, Y: g1.Y })
+            non_signer_pub_keys.push(S3NTaskManager::G1Point { X: g1.X, Y: g1.Y })
         }
 
-        let mut quorum_apks = Vec::<IncredibleSquaringTaskManager::G1Point>::new();
+        let mut quorum_apks = Vec::<S3NTaskManager::G1Point>::new();
         for pub_key in response.quorum_apks_g1.iter() {
             let g1 = convert_to_g1_point(pub_key.g1())?;
-            quorum_apks.push(IncredibleSquaringTaskManager::G1Point { X: g1.X, Y: g1.Y })
+            quorum_apks.push(S3NTaskManager::G1Point { X: g1.X, Y: g1.Y })
         }
 
         let non_signer_stakes_and_signature = NonSignerStakesAndSignature {
             nonSignerPubkeys: non_signer_pub_keys,
             nonSignerQuorumBitmapIndices: response.non_signer_quorum_bitmap_indices,
             quorumApks: quorum_apks,
-            apkG2: IncredibleSquaringTaskManager::G2Point {
+            apkG2: S3NTaskManager::G2Point {
                 X: convert_to_g2_point(response.signers_apk_g2.g2())?.X,
                 Y: convert_to_g2_point(response.signers_apk_g2.g2())?.Y,
             },
-            sigma: IncredibleSquaringTaskManager::G1Point {
+            sigma: S3NTaskManager::G1Point {
                 X: convert_to_g1_point(response.signers_agg_sig_g1.g1_point().g1())?.X,
                 Y: convert_to_g1_point(response.signers_agg_sig_g1.g1_point().g1())?.Y,
             },
@@ -377,11 +377,11 @@ impl Aggregator {
 fn check_double_mapping(
     outer_map: &HashMap<
         u32,
-        HashMap<TaskResponseDigest, IncredibleSquaringTaskManager::TaskResponse>,
+        HashMap<TaskResponseDigest, S3NTaskManager::TaskResponse>,
     >,
     outer_key: u32,
     inner_key: TaskResponseDigest,
-) -> Option<&IncredibleSquaringTaskManager::TaskResponse> {
+) -> Option<&S3NTaskManager::TaskResponse> {
     if let Some(inner_map) = outer_map.get(&outer_key) {
         if let Some(value) = inner_map.get(&inner_key) {
             return Some(value);
@@ -401,7 +401,7 @@ mod tests {
         let mut inner_map = HashMap::new();
         inner_map.insert(
             TaskResponseDigest::default(),
-            IncredibleSquaringTaskManager::TaskResponse {
+            S3NTaskManager::TaskResponse {
                 referenceTaskIndex: "0".parse().unwrap(),
                 numberSquared: "0".parse().unwrap(),
             },

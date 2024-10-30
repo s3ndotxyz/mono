@@ -16,8 +16,8 @@ use eigen_utils::{
 };
 use error::ChainIoError;
 use s3n_bindings::{
-    IncredibleSquaringServiceManager::{self, incredibleSquaringTaskManagerReturn},
-    IncredibleSquaringTaskManager::{self, G1Point, Task, TaskResponse, TaskResponseMetadata},
+    S3NServiceManager::{self, S3NTaskManagerReturn},
+    S3NTaskManager::{self, G1Point, Task, TaskResponse, TaskResponseMetadata},
 };
 use tracing::info;
 
@@ -48,13 +48,13 @@ impl AvsWriter {
         } = service_manager_addr_return;
 
         let contract_service_manager =
-            IncredibleSquaringServiceManager::new(service_manager_addr, &provider);
+            S3NServiceManager::new(service_manager_addr, &provider);
 
         let task_manager_address_return = contract_service_manager
-            .incredibleSquaringTaskManager()
+            .S3NTaskManager()
             .call()
             .await?;
-        let incredibleSquaringTaskManagerReturn {
+        let S3NTaskManagerReturn {
             _0: task_manager_address,
         } = task_manager_address_return;
 
@@ -74,7 +74,7 @@ impl AvsWriter {
     ) -> Result<(TransactionReceipt, u32), ChainIoError> {
         let signer = get_signer(self.signer.clone(), &self.rpc_url);
         let task_manager_contract =
-            IncredibleSquaringTaskManager::new(self.task_manager_addr, signer);
+            S3NTaskManager::new(self.task_manager_addr, signer);
 
         let create_new_task_call = task_manager_contract.createNewTask(
             num_to_square,
@@ -92,7 +92,7 @@ impl AvsWriter {
                     Ok(receipt) => {
                         let logs = &receipt.inner.logs()[0];
                         let log_decoded_option = logs
-                            .log_decode::<IncredibleSquaringTaskManager::NewTaskCreated>()
+                            .log_decode::<S3NTaskManager::NewTaskCreated>()
                             .ok();
 
                         if let Some(new_task_created) = log_decoded_option {
@@ -125,7 +125,7 @@ impl AvsWriter {
         info!("raised challenge , task {:?}, task_response: {:?}, pub_keys_of_non_signing_operators {:?}", task, task_response, pub_keys_of_non_signing_operators);
         let signer = get_signer(self.signer.clone(), &self.rpc_url);
         let task_manager_contract =
-            IncredibleSquaringTaskManager::new(self.task_manager_addr, signer);
+            S3NTaskManager::new(self.task_manager_addr, signer);
 
         let challenge_tx_call = task_manager_contract.raiseAndResolveChallenge(
             task,
@@ -160,11 +160,11 @@ impl AvsWriter {
         &self,
         task: Task,
         task_response: TaskResponse,
-        non_signer_stakes_and_signature: IncredibleSquaringTaskManager::NonSignerStakesAndSignature,
+        non_signer_stakes_and_signature: S3NTaskManager::NonSignerStakesAndSignature,
     ) -> Result<(), ChainIoError> {
         let signer = get_signer(self.signer.clone(), &self.rpc_url);
         let task_manager_contract =
-            IncredibleSquaringTaskManager::new(self.task_manager_addr, signer);
+            S3NTaskManager::new(self.task_manager_addr, signer);
         info!("sending respond_to_task");
         let receipt = task_manager_contract
             .respondToTask(task, task_response, non_signer_stakes_and_signature)

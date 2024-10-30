@@ -18,7 +18,7 @@ use eigen_types::operator::OperatorId;
 use eyre::Result;
 use futures_util::StreamExt;
 use s3n_aggregator::rpc_server::SignedTaskResponse;
-use s3n_bindings::IncredibleSquaringTaskManager::{self, NewTaskCreated, TaskResponse};
+use s3n_bindings::S3NTaskManager::{self, NewTaskCreated, TaskResponse};
 use s3n_config::IncredibleConfig;
 use rust_bls_bn254::keystores::base_keystore::Keystore;
 use tracing::info;
@@ -120,7 +120,7 @@ impl OperatorBuilder {
 
             while let Some(log) = stream.next().await {
                 let task_option = log
-                    .log_decode::<IncredibleSquaringTaskManager::NewTaskCreated>()
+                    .log_decode::<S3NTaskManager::NewTaskCreated>()
                     .ok();
                 if let Some(task) = task_option {
                     let data = task.data();
@@ -171,7 +171,7 @@ mod tests {
         get_s3n_registry_coordinator,
     };
     use std::str::FromStr;
-    use IncredibleSquaringTaskManager::Task;
+    use S3NTaskManager::Task;
     const S3N_CONFIG_FILE: &str = r#"
     [rpc_config]
     chain_id = 31337

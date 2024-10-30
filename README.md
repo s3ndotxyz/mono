@@ -1,6 +1,6 @@
 # S3N
 
-Basic repo demoing a simple AVS middleware with full eigenlayer integration, in rust.
+S3N is an AVS built on EigenLayer designed to notarise and commit to credentials, replacing the need for data signing by issuers.
 
 ## Dependencies
 
@@ -29,7 +29,7 @@ We have an example file [s3n_config.toml](https://github.com/0xZeroLabs/s3n/tree
 
 This command launches 4 crates together 
 - Operator : It listens for new tasks , responds them by signing with their bls key and send the signed response to the aggregator.
-- Aggregator : Sets up an Rpc client to receive signed task responses from operator, aggregates the signatures , calls the respondToTask function in the TaskManager contract.
+- Aggregator : Sets up an rpc client to receive signed task responses from operator, aggregates the signatures , calls the respondToTask function in the TaskManager contract.
 - Challenger : It listens for new tasks , checks the operators response, if found wrong, it raises a challenge by calling the `raiseAndResolveChallenge` function in the task manager contract.
 - Task Spam : It creates a new task every 10 seconds by calling the `createNewTask` function in the task manager contract.
 
@@ -52,9 +52,9 @@ The architecture of the AVS contains:
 
 - [Eigenlayer core](https://github.com/Layr-Labs/eigenlayer-contracts/tree/master) contracts
 - AVS contracts
-  - [ServiceManager](contracts/src/IncredibleSquaringServiceManager.sol) which will eventually contain slashing logic but for M2 is just a placeholder.
-  - [TaskManager](contracts/src/IncredibleSquaringTaskManager.sol) which contains [task creation](contracts/src/IncredibleSquaringTaskManager.sol#L83) and [task response](contracts/src/IncredibleSquaringTaskManager.sol#L102) logic.
-  - The [challenge](contracts/src/IncredibleSquaringTaskManager.sol#L176) logic could be separated into its own contract, but we have decided to include it in the TaskManager for this simple task.
+  - [ServiceManager](contracts/src/S3NServiceManager.sol) which will eventually contain slashing logic but for M2 is just a placeholder.
+  - [TaskManager](contracts/src/S3NTaskManager.sol) which contains [task creation](contracts/src/S3NTaskManager.sol#L83) and [task response](contracts/src/S3NTaskManager.sol#L102) logic.
+  - The [challenge](contracts/src/S3NTaskManager.sol#L176) logic could be separated into its own contract, but we have decided to include it in the TaskManager for this simple task.
   - Set of [registry contracts](https://github.com/Layr-Labs/eigenlayer-middleware) to manage operators opted in to this avs
 - Task Generator
   - in a real world scenario, this could be a separate entity, but for this simple demo, the aggregator also acts as the task generator

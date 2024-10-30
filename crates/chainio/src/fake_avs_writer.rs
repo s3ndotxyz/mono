@@ -1,6 +1,6 @@
 use alloy::primitives::{Address, TxHash};
 use eigen_utils::get_signer;
-use s3n_bindings::IncredibleSquaringTaskManager::{
+use s3n_bindings::S3NTaskManager::{
     self, G1Point, Task, TaskResponse, TaskResponseMetadata,
 };
 
@@ -28,7 +28,7 @@ impl FakeAvsWriter {
     ) -> Result<TxHash, ChainIoError> {
         let signer = get_signer(self.signer.clone(), &self.rpc_url);
         let task_manager_contract =
-            IncredibleSquaringTaskManager::new(self.task_manager_addr, signer);
+            S3NTaskManager::new(self.task_manager_addr, signer);
 
         let challenge_tx_call = task_manager_contract.raiseAndResolveChallenge(
             task,
@@ -60,16 +60,16 @@ impl FakeAvsWriter {
     /// Send the aggregated response
     /// task -  [`Task`]
     /// task_response - [`TaskResponse`]
-    /// non_signer_stakes_and_signature - [`IncredibleSquaringTaskManager::NonSignerStakesAndSignature`]
+    /// non_signer_stakes_and_signature - [`S3NTaskManager::NonSignerStakesAndSignature`]
     pub async fn send_aggregated_response(
         &self,
         task: Task,
         task_response: TaskResponse,
-        non_signer_stakes_and_signature: IncredibleSquaringTaskManager::NonSignerStakesAndSignature,
+        non_signer_stakes_and_signature: S3NTaskManager::NonSignerStakesAndSignature,
     ) {
         let signer = get_signer(self.signer.clone(), &self.rpc_url);
         let task_manager_contract =
-            IncredibleSquaringTaskManager::new(self.task_manager_addr, signer);
+            S3NTaskManager::new(self.task_manager_addr, signer);
 
         let _ = task_manager_contract
             .respondToTask(task, task_response, non_signer_stakes_and_signature)

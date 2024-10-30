@@ -18,7 +18,7 @@ mod tests {
     };
     use eigen_utils::get_provider;
     use s3n_aggregator::Aggregator;
-    use s3n_bindings::IncredibleSquaringTaskManager;
+    use s3n_bindings::S3NTaskManager;
     use s3n_challenger::Challenger;
     use s3n_operator::builder::OperatorBuilder;
     use s3n_avs::commands::avs::register_operator_with_el_and_avs;
@@ -186,7 +186,7 @@ mod tests {
         let _ = task_generator.create_new_task("2".parse().unwrap()).await;
         tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
 
-        let task_manager_contract = IncredibleSquaringTaskManager::new(
+        let task_manager_contract = S3NTaskManager::new(
             get_s3n_task_manager().await,
             get_provider("http://localhost:8545"),
         );
@@ -295,7 +295,7 @@ mod tests {
         let _ = task_generator.create_new_task("2".parse().unwrap()).await;
         tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
 
-        let task_manager_contract = IncredibleSquaringTaskManager::new(
+        let task_manager_contract = S3NTaskManager::new(
             get_s3n_task_manager().await,
             get_provider("http://localhost:8545"),
         );
