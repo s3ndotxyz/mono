@@ -6,10 +6,10 @@ use alloy::{
     primitives::TxHash,
     rpc::types::{serde_helpers::OtherFields, AccessList, Transaction},
 };
-use incredible_bindings::IncredibleSquaringTaskManager::{
+use s3n_bindings::IncredibleSquaringTaskManager::{
     respondToTaskCall, G1Point, Task, TaskResponded,
 };
-use incredible_chainio::fake_avs_writer::FakeAvsWriter;
+use s3n_chainio::fake_avs_writer::FakeAvsWriter;
 use std::collections::HashMap;
 
 /// Fake Challenger

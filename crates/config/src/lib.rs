@@ -26,7 +26,7 @@ pub struct IncredibleConfig {
 
     operator_registration_config: OperatorRegistrationConfig,
 
-    incredible_contracts_config: IncredibleContractsConfig,
+    s3n_contracts_config: IncredibleContractsConfig,
 
     task_manager_config: TaskManagerConfig,
 
@@ -220,11 +220,11 @@ impl IncredibleConfig {
     }
 
     pub fn set_task_manager_address(&mut self, address: String) {
-        self.incredible_contracts_config.task_manager_addr = address;
+        self.s3n_contracts_config.task_manager_addr = address;
     }
 
     pub fn set_erc20_mock_strategy_address(&mut self, address: String) {
-        self.incredible_contracts_config.erc20_mock_strategy_addr = address;
+        self.s3n_contracts_config.erc20_mock_strategy_addr = address;
     }
 
     pub fn set_task_manager_signer(&mut self, signer: String) {
@@ -347,7 +347,7 @@ impl IncredibleConfig {
 
     pub fn task_manager_addr(&self) -> Result<Address, ConfigError> {
         Address::from_hex(
-            self.incredible_contracts_config
+            self.s3n_contracts_config
                 .task_manager_addr
                 .as_bytes(),
         )
@@ -356,7 +356,7 @@ impl IncredibleConfig {
 
     pub fn erc20_mock_strategy_addr(&self) -> Result<Address, ConfigError> {
         Address::from_hex(
-            self.incredible_contracts_config
+            self.s3n_contracts_config
                 .erc20_mock_strategy_addr
                 .as_bytes(),
         )
@@ -388,9 +388,9 @@ mod tests {
     use crate::OperatorConfig;
     use crate::OperatorRegistrationConfig;
     use crate::RpcConfig;
-    use incredible_testing_utils::{
-        get_incredible_squaring_operator_state_retriever,
-        get_incredible_squaring_registry_coordinator,
+    use s3n_testing_utils::{
+        get_s3n_operator_state_retriever,
+        get_s3n_registry_coordinator,
     };
     const EXTENSION: &str = "toml";
 
@@ -542,23 +542,23 @@ mod tests {
         let mut s3n_config: IncredibleConfig =
             toml::from_str(s3n_config_file).unwrap();
         s3n_config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         s3n_config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );
         assert_eq!(
             s3n_config.registry_coordinator_addr().unwrap(),
-            get_incredible_squaring_registry_coordinator().await
+            get_s3n_registry_coordinator().await
         );
 
         assert_eq!(
             s3n_config.operator_state_retriever_addr().unwrap(),
-            get_incredible_squaring_operator_state_retriever().await
+            get_s3n_operator_state_retriever().await
         );
     }
 

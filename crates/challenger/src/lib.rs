@@ -11,11 +11,11 @@ use alloy_provider::Provider;
 use error::ChallengerError;
 use eyre::Result;
 use futures_util::stream::StreamExt;
-use incredible_bindings::IncredibleSquaringTaskManager::{
+use s3n_bindings::IncredibleSquaringTaskManager::{
     respondToTaskCall, G1Point, NewTaskCreated, Task, TaskResponded, TaskResponse,
     TaskResponseMetadata,
 };
-use incredible_chainio::AvsWriter;
+use s3n_chainio::AvsWriter;
 use s3n_config::IncredibleConfig;
 use tracing::info;
 
@@ -290,11 +290,11 @@ mod tests {
         hex::FromHex,
         primitives::{Bytes, FixedBytes, TxHash, U256},
     };
-    use incredible_chainio::fake_avs_writer::FakeAvsWriter;
-    use incredible_task_generator::TaskManager;
-    use incredible_testing_utils::{
-        get_incredible_squaring_operator_state_retriever,
-        get_incredible_squaring_registry_coordinator, get_incredible_squaring_task_manager,
+    use s3n_chainio::fake_avs_writer::FakeAvsWriter;
+    use s3n_task_generator::TaskManager;
+    use s3n_testing_utils::{
+        get_s3n_operator_state_retriever,
+        get_s3n_registry_coordinator, get_s3n_task_manager,
     };
     use std::str::FromStr;
     const S3N_CONFIG_FILE: &str = r#"
@@ -324,12 +324,12 @@ signer = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
     pub(crate) async fn build_challenger() -> Result<Challenger, ChallengerError> {
         let mut config: IncredibleConfig = toml::from_str(S3N_CONFIG_FILE)?;
         config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );
@@ -375,18 +375,18 @@ signer = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
     async fn test_call_challenge() {
         let mut config: IncredibleConfig = toml::from_str(S3N_CONFIG_FILE).unwrap();
         config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );
 
         let fake_avs_writer = FakeAvsWriter {
-            task_manager_addr: get_incredible_squaring_task_manager().await,
+            task_manager_addr: get_s3n_task_manager().await,
             signer: config.get_signer(),
             rpc_url: config.http_rpc_url(),
         };
@@ -399,7 +399,7 @@ signer = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
         };
 
         let task_manager = TaskManager::new(
-            get_incredible_squaring_task_manager().await,
+            get_s3n_task_manager().await,
             config.http_rpc_url(),
             config.task_manager_signer(),
         );
@@ -435,18 +435,18 @@ signer = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
     pub(crate) async fn test_process_task_response_log() {
         let mut config: IncredibleConfig = toml::from_str(S3N_CONFIG_FILE).unwrap();
         config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );
 
         let fake_avs_writer = FakeAvsWriter {
-            task_manager_addr: get_incredible_squaring_task_manager().await,
+            task_manager_addr: get_s3n_task_manager().await,
             signer: config.get_signer(),
             rpc_url: config.http_rpc_url(),
         };

@@ -14,8 +14,8 @@ use eigen_services_operatorsinfo::operatorsinfo_inmemory::OperatorInfoServiceInM
 use eigen_types::avs::TaskResponseDigest;
 use eigen_utils::get_ws_provider;
 use futures_util::StreamExt;
-use incredible_bindings::IncredibleSquaringTaskManager::NewTaskCreated;
-use incredible_bindings::IncredibleSquaringTaskManager::{self, NonSignerStakesAndSignature};
+use s3n_bindings::IncredibleSquaringTaskManager::NewTaskCreated;
+use s3n_bindings::IncredibleSquaringTaskManager::{self, NonSignerStakesAndSignature};
 use s3n_config::IncredibleConfig;
 use jsonrpc_core::serde_json;
 use jsonrpc_core::{Error, IoHandler, Params, Value};
@@ -367,9 +367,9 @@ mod tests {
     use alloy::primitives::{FixedBytes, U256};
     use eigen_crypto_bls::BlsKeyPair;
     use eigen_types::test::TestOperator;
-    use incredible_testing_utils::{
-        get_incredible_squaring_operator_state_retriever,
-        get_incredible_squaring_registry_coordinator,
+    use s3n_testing_utils::{
+        get_s3n_operator_state_retriever,
+        get_s3n_registry_coordinator,
     };
     use std::time::Duration;
 
@@ -417,12 +417,12 @@ mod tests {
         let mut s3n_config: IncredibleConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         s3n_config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );

@@ -1,11 +1,11 @@
 //! Builder module for the AVS. Starts all the services for the AVS using futures simulatenously.
 use eigen_nodeapi::{create_server, NodeApi};
 use futures::TryFutureExt;
-use incredible_aggregator::Aggregator;
-use incredible_challenger::Challenger;
+use s3n_aggregator::Aggregator;
+use s3n_challenger::Challenger;
 use s3n_config::IncredibleConfig;
-use incredible_operator::builder::OperatorBuilder;
-use incredible_task_generator::TaskManager;
+use s3n_operator::builder::OperatorBuilder;
+use s3n_task_generator::TaskManager;
 use ntex::rt::System;
 use std::future::Future;
 use tracing::info;
@@ -48,7 +48,7 @@ impl Default for DefaultAvsLauncher {
 impl LaunchAvs<AvsBuilder> for DefaultAvsLauncher {
     async fn launch_avs(self, avs: AvsBuilder) -> eyre::Result<()> {
         info!("launching crates: s3n-rs");
-        incredible_metrics::new();
+        s3n_metrics::new();
         // start operator
         let mut operator_builder = OperatorBuilder::build(avs.config.clone()).await?;
         let mut challenge = Challenger::build(avs.config.clone()).await?;
@@ -76,7 +76,7 @@ impl LaunchAvs<AvsBuilder> for DefaultAvsLauncher {
             .start()
             .map_err(|e| eyre::eyre!("Task manager error {e:?}"));
 
-        let node_api = NodeApi::new("incredible-squaring", "v0.0.1");
+        let node_api = NodeApi::new("s3n-squaring", "v0.0.1");
         let node_api_address = avs.config.node_api_port_address();
         info!("node_api_address{:?}", node_api_address);
 

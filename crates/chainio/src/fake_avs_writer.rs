@@ -1,6 +1,6 @@
 use alloy::primitives::{Address, TxHash};
 use eigen_utils::get_signer;
-use incredible_bindings::IncredibleSquaringTaskManager::{
+use s3n_bindings::IncredibleSquaringTaskManager::{
     self, G1Point, Task, TaskResponse, TaskResponseMetadata,
 };
 

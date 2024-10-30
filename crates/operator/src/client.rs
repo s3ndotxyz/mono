@@ -1,6 +1,6 @@
 use alloy::rpc::client::{ReqwestClient, RpcClient};
 use eyre::Result;
-pub use incredible_aggregator::rpc_server::SignedTaskResponse;
+pub use s3n_aggregator::rpc_server::SignedTaskResponse;
 use reqwest::Client;
 use serde_json::json;
 use tokio::time::{sleep, Duration};
@@ -52,7 +52,7 @@ impl ClientAggregator {
                     .request("process_signed_task_response", params)
                     .await?;
                 if s {
-                    incredible_metrics::inc_num_tasks_accepted_by_aggregator();
+                    s3n_metrics::inc_num_tasks_accepted_by_aggregator();
                     return Ok(());
                 }
 

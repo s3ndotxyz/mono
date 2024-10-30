@@ -1,6 +1,6 @@
 use crate::commands::avs::{AvsCommand, NoArgs};
 use clap::{self, Args, Parser, Subcommand};
-use incredible_cli_runner::IncredibleRunner;
+use s3n_cli_runner::IncredibleRunner;
 use std::ffi::OsString;
 use std::fmt;
 

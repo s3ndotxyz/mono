@@ -11,13 +11,13 @@ description = "incredible squaring avs in rust"
 workspace = true
 
 [dependencies]
-incredible-aggregator.workspace = true
-incredible-operator = {workspace = true , features = ["default"]}
-incredible-cli-runner.workspace = true
-incredible-config.workspace = true
-incredible-avs.workspace = true
-incredible-metrics.workspace = true
-incredible-testing-utils.workspace = true
+s3n-aggregator.workspace = true
+s3n-operator = {workspace = true , features = ["default"]}
+s3n-cli-runner.workspace = true
+s3n-config.workspace = true
+s3n-avs.workspace = true
+s3n-metrics.workspace = true
+s3n-testing-utils.workspace = true
 clap = { workspace = true, features = ["derive", "env"] }
 eyre.workspace = true
 alloy.workspace = true

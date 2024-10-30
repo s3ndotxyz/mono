@@ -2,7 +2,7 @@ use alloy::transports::{RpcError, TransportErrorKind};
 use eigen_client_avsregistry::error::AvsRegistryError;
 use eigen_crypto_bls::error::BlsError;
 use eigen_services_blsaggregation::bls_agg::BlsAggregationServiceError;
-use incredible_chainio::error::ChainIoError;
+use s3n_chainio::error::ChainIoError;
 use s3n_config::error::ConfigError;
 use jsonrpc_core::serde_json::Error;
 use thiserror::Error;

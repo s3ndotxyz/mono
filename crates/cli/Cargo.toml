@@ -1,5 +1,5 @@
 [package]
-name = "incredible-cli-runner"
+name = "s3n-cli-runner"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true

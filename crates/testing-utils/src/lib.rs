@@ -7,11 +7,11 @@ use eigen_utils::binding::ContractsRegistry::{self, contractsReturn};
 pub const CONTRACTS_REGISTRY: Address = address!("5FbDB2315678afecb367f032d93F642f64180aa3");
 
 /// Get the incredible squaring registry coordinator address for anvil
-pub async fn get_incredible_squaring_registry_coordinator() -> Address {
+pub async fn get_s3n_registry_coordinator() -> Address {
     let contracts_registry = ContractsRegistry::new(CONTRACTS_REGISTRY, (*ANVIL_RPC_URL).clone());
 
     let val = contracts_registry
-        .contracts("incredible_squaring_registry_coordinator".to_string())
+        .contracts("s3n_registry_coordinator".to_string())
         .call()
         .await
         .unwrap();
@@ -21,11 +21,11 @@ pub async fn get_incredible_squaring_registry_coordinator() -> Address {
 }
 
 /// Get the incredible squaring operator state retriever address for anvil
-pub async fn get_incredible_squaring_operator_state_retriever() -> Address {
+pub async fn get_s3n_operator_state_retriever() -> Address {
     let contracts_registry = ContractsRegistry::new(CONTRACTS_REGISTRY, (*ANVIL_RPC_URL).clone());
 
     let val = contracts_registry
-        .contracts("incredible_squaring_operator_state_retriever".to_string())
+        .contracts("s3n_operator_state_retriever".to_string())
         .call()
         .await
         .unwrap();
@@ -35,11 +35,11 @@ pub async fn get_incredible_squaring_operator_state_retriever() -> Address {
 }
 
 /// Get the incredible squaring task manager address for anvil
-pub async fn get_incredible_squaring_task_manager() -> Address {
+pub async fn get_s3n_task_manager() -> Address {
     let contracts_registry = ContractsRegistry::new(CONTRACTS_REGISTRY, (*ANVIL_RPC_URL).clone());
 
     let val = contracts_registry
-        .contracts("incredible_squaring_task_manager".to_string())
+        .contracts("s3n_task_manager".to_string())
         .call()
         .await
         .unwrap();
@@ -49,7 +49,7 @@ pub async fn get_incredible_squaring_task_manager() -> Address {
 }
 
 /// Get the incredible squaring strategy address for anvil
-pub async fn get_incredible_squaring_strategy_address() -> Address {
+pub async fn get_s3n_strategy_address() -> Address {
     let contracts_registry = ContractsRegistry::new(CONTRACTS_REGISTRY, (*ANVIL_RPC_URL).clone());
 
     let val = contracts_registry

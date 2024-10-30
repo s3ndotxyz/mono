@@ -12,13 +12,13 @@ description = "integration tests for incredible avs"
 alloy = { version = "0.1", features = ["full","signer-keystore","node-bindings"] }
 eigen-utils = {git = "https://github.com/layr-labs/eigensdk-rs" , rev = "e01b594"}
 eigen-logging = {git = "https://github.com/layr-labs/eigensdk-rs" , rev = "e01b594"}
-incredible-config = {path = "../crates/config/"}
-incredible-challenger = {path = "../crates/challenger/"}
-incredible-bindings = {path = "../crates/bindings/"}
-incredible-testing-utils = {path = "../crates/testing-utils/"}
-incredible-task-generator = {path = "../crates/task_generator/"}
-incredible-operator = {path = "../crates/operator/" , features = ["integration_tests"]}
-incredible-aggregator = {path = "../crates/aggregator/"}
+s3n-config = {path = "../crates/config/"}
+s3n-challenger = {path = "../crates/challenger/"}
+s3n-bindings = {path = "../crates/bindings/"}
+s3n-testing-utils = {path = "../crates/testing-utils/"}
+s3n-task-generator = {path = "../crates/task_generator/"}
+s3n-operator = {path = "../crates/operator/" , features = ["integration_tests"]}
+s3n-aggregator = {path = "../crates/aggregator/"}
 toml = "0.8"
 
 [dev-dependencies]

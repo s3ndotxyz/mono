@@ -1,5 +1,5 @@
 [package]
-name = "incredible-testing-utils"
+name = "s3n-testing-utils"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true

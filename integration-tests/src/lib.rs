@@ -17,15 +17,15 @@ mod tests {
         get_avs_directory_address, get_delegation_manager_address, get_strategy_manager_address,
     };
     use eigen_utils::get_provider;
-    use incredible_aggregator::Aggregator;
-    use incredible_bindings::IncredibleSquaringTaskManager;
-    use incredible_challenger::Challenger;
-    use incredible_operator::builder::OperatorBuilder;
-    use incredible_squaring_avs::commands::avs::register_operator_with_el_and_avs;
-    use incredible_testing_utils::{
-        get_incredible_squaring_operator_state_retriever,
-        get_incredible_squaring_registry_coordinator, get_incredible_squaring_strategy_address,
-        get_incredible_squaring_task_manager,
+    use s3n_aggregator::Aggregator;
+    use s3n_bindings::IncredibleSquaringTaskManager;
+    use s3n_challenger::Challenger;
+    use s3n_operator::builder::OperatorBuilder;
+    use s3n_avs::commands::avs::register_operator_with_el_and_avs;
+    use s3n_testing_utils::{
+        get_s3n_operator_state_retriever,
+        get_s3n_registry_coordinator, get_s3n_strategy_address,
+        get_s3n_task_manager,
     };
     use serial_test::serial;
 
@@ -65,12 +65,12 @@ mod tests {
             toml::from_str(S3N_CONFIG_FILE).unwrap();
 
         s3n_config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         s3n_config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );
@@ -78,7 +78,7 @@ mod tests {
         let avs_directory_address_anvil = get_avs_directory_address().await;
 
         let strategy_manager_address_anvil = get_strategy_manager_address().await;
-        let erc20_mock_strategy_address_anvil = get_incredible_squaring_strategy_address().await;
+        let erc20_mock_strategy_address_anvil = get_s3n_strategy_address().await;
 
         s3n_config.set_delegation_manager_addr(delegation_manager_address_anvil.to_string());
         s3n_config.set_avs_directory_address(avs_directory_address_anvil.to_string());
@@ -124,7 +124,7 @@ mod tests {
 
     #[tokio::test]
     #[serial]
-    async fn test_incredible_squaring_without_challenger() {
+    async fn test_s3n_without_challenger() {
         init_logger(LogLevel::Info);
         register_operator_with_el().await;
         tokio::time::sleep(tokio::time::Duration::from_secs(2)).await;
@@ -133,12 +133,12 @@ mod tests {
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_aggregator_ip_address("127.0.0.1:8081".to_string());
         s3n_config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         s3n_config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );
@@ -178,8 +178,8 @@ mod tests {
         });
         tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
 
-        let task_generator = incredible_task_generator::TaskManager::new(
-            get_incredible_squaring_task_manager().await,
+        let task_generator = s3n_task_generator::TaskManager::new(
+            get_s3n_task_manager().await,
             "http://localhost:8545".to_string(),
             "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d".to_string(),
         );
@@ -187,7 +187,7 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
 
         let task_manager_contract = IncredibleSquaringTaskManager::new(
-            get_incredible_squaring_task_manager().await,
+            get_s3n_task_manager().await,
             get_provider("http://localhost:8545"),
         );
         let latest_task_num = task_manager_contract
@@ -227,7 +227,7 @@ mod tests {
 
     #[tokio::test]
     #[serial]
-    async fn test_incredible_squaring_with_challenger() {
+    async fn test_s3n_with_challenger() {
         init_logger(LogLevel::Info);
         register_operator_with_el().await;
         tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
@@ -237,12 +237,12 @@ mod tests {
         s3n_config.set_aggregator_ip_address("127.0.0.1:8082".to_string());
 
         s3n_config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         s3n_config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );
@@ -287,8 +287,8 @@ mod tests {
             let _ = challenger.start_challenger().await;
         });
 
-        let task_generator = incredible_task_generator::TaskManager::new(
-            get_incredible_squaring_task_manager().await,
+        let task_generator = s3n_task_generator::TaskManager::new(
+            get_s3n_task_manager().await,
             "http://localhost:8545".to_string(),
             "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d".to_string(),
         );
@@ -296,7 +296,7 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
 
         let task_manager_contract = IncredibleSquaringTaskManager::new(
-            get_incredible_squaring_task_manager().await,
+            get_s3n_task_manager().await,
             get_provider("http://localhost:8545"),
         );
         let latest_task_num = task_manager_contract

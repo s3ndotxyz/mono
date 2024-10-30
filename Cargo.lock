@@ -3389,221 +3389,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "incredible-aggregator"
-version = "0.0.1-alpha"
-dependencies = [
- "alloy",
- "ark-bn254",
- "ark-serialize 0.4.2",
- "ark-std 0.4.0",
- "eigen-client-avsregistry",
- "eigen-crypto-bls",
- "eigen-logging",
- "eigen-services-avsregistry",
- "eigen-services-blsaggregation",
- "eigen-services-operatorsinfo",
- "eigen-types",
- "eigen-utils",
- "eyre",
- "futures-util",
- "hex",
- "incredible-bindings",
- "incredible-chainio",
- "incredible-config",
- "incredible-metrics",
- "incredible-operator",
- "incredible-testing-utils",
- "jsonrpc-core",
- "jsonrpc-http-server",
- "reqwest 0.12.7",
- "serde",
- "thiserror",
- "tokio",
- "tokio-util 0.7.12",
- "toml",
- "tracing",
-]
-
-[[package]]
-name = "incredible-avs"
-version = "0.0.1-alpha"
-dependencies = [
- "alloy",
- "clap",
- "eigen-nodeapi",
- "eyre",
- "futures",
- "incredible-aggregator",
- "incredible-challenger",
- "incredible-config",
- "incredible-metrics",
- "incredible-operator",
- "incredible-task-generator",
- "metrics",
- "metrics-util",
- "ntex",
- "serde",
- "thiserror",
- "tokio",
- "tracing",
-]
-
-[[package]]
-name = "incredible-bindings"
-version = "0.0.1-alpha"
-dependencies = [
- "alloy",
- "serde",
-]
-
-[[package]]
-name = "incredible-chainio"
-version = "0.0.1-alpha"
-dependencies = [
- "alloy",
- "alloy-provider",
- "eigen-client-avsregistry",
- "eigen-contract-bindings",
- "eigen-logging",
- "eigen-types",
- "eigen-utils",
- "eyre",
- "futures-util",
- "incredible-bindings",
- "incredible-config",
- "thiserror",
- "tokio",
- "tracing",
-]
-
-[[package]]
-name = "incredible-challenger"
-version = "0.0.1-alpha"
-dependencies = [
- "alloy",
- "alloy-provider",
- "eigen-utils",
- "eyre",
- "futures-util",
- "incredible-bindings",
- "incredible-chainio",
- "incredible-config",
- "incredible-task-generator",
- "incredible-testing-utils",
- "thiserror",
- "tokio",
- "toml",
- "tracing",
-]
-
-[[package]]
-name = "incredible-cli-runner"
-version = "0.0.1-alpha"
-dependencies = [
- "tokio",
- "tracing",
-]
-
-[[package]]
-name = "incredible-config"
-version = "0.0.1-alpha"
-dependencies = [
- "alloy",
- "confy",
- "eigen-logging",
- "eigen-types",
- "hex",
- "incredible-testing-utils",
- "ruint",
- "serde",
- "tempfile",
- "thiserror",
- "tokio",
- "toml",
- "tracing",
-]
-
-[[package]]
-name = "incredible-metrics"
-version = "0.0.1-alpha"
-dependencies = [
- "alloy",
- "alloy-provider",
- "eigen-metrics",
- "eyre",
- "futures-util",
- "incredible-bindings",
- "incredible-config",
- "metrics",
- "metrics-util",
- "reqwest 0.12.7",
- "thiserror",
- "tokio",
-]
-
-[[package]]
-name = "incredible-operator"
-version = "0.0.1-alpha"
-dependencies = [
- "alloy",
- "alloy-provider",
- "ark-ec",
- "ark-ff 0.4.2",
- "eigen-cli",
- "eigen-client-avsregistry",
- "eigen-client-eth",
- "eigen-crypto-bls",
- "eigen-crypto-bn254",
- "eigen-logging",
- "eigen-metrics-collectors-rpc-calls",
- "eigen-types",
- "eigen-utils",
- "eyre",
- "futures-util",
- "hex",
- "incredible-aggregator",
- "incredible-bindings",
- "incredible-config",
- "incredible-metrics",
- "incredible-testing-utils",
- "rand_core",
- "reqwest 0.12.7",
- "rust-bls-bn254 0.1.0",
- "serde_json",
- "tempfile",
- "thiserror",
- "tokio",
- "toml",
- "tracing",
-]
-
-[[package]]
-name = "incredible-task-generator"
-version = "0.0.1-alpha"
-dependencies = [
- "alloy",
- "alloy-provider",
- "eigen-utils",
- "eyre",
- "futures-util",
- "incredible-bindings",
- "incredible-config",
- "lazy_static",
- "thiserror",
- "tokio",
- "tracing",
-]
-
-[[package]]
-name = "incredible-testing-utils"
-version = "0.0.1-alpha"
-dependencies = [
- "alloy",
- "eigen-testing-utils",
- "eigen-utils",
-]
-
-[[package]]
 name = "indenter"
 version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5724,18 +5509,233 @@ dependencies = [
  "eigen-utils",
  "eyre",
  "hex",
- "incredible-aggregator",
- "incredible-avs",
- "incredible-cli-runner",
- "incredible-config",
- "incredible-metrics",
- "incredible-operator",
- "incredible-testing-utils",
  "metrics-exporter-prometheus",
  "metrics-util",
  "rust-bls-bn254 0.1.0",
+ "s3n-aggregator",
+ "s3n-avs",
+ "s3n-cli-runner",
+ "s3n-config",
+ "s3n-metrics",
+ "s3n-operator",
+ "s3n-testing-utils",
  "tokio",
  "tracing",
+]
+
+[[package]]
+name = "s3n-aggregator"
+version = "0.0.1-alpha"
+dependencies = [
+ "alloy",
+ "ark-bn254",
+ "ark-serialize 0.4.2",
+ "ark-std 0.4.0",
+ "eigen-client-avsregistry",
+ "eigen-crypto-bls",
+ "eigen-logging",
+ "eigen-services-avsregistry",
+ "eigen-services-blsaggregation",
+ "eigen-services-operatorsinfo",
+ "eigen-types",
+ "eigen-utils",
+ "eyre",
+ "futures-util",
+ "hex",
+ "jsonrpc-core",
+ "jsonrpc-http-server",
+ "reqwest 0.12.7",
+ "s3n-bindings",
+ "s3n-chainio",
+ "s3n-config",
+ "s3n-metrics",
+ "s3n-operator",
+ "s3n-testing-utils",
+ "serde",
+ "thiserror",
+ "tokio",
+ "tokio-util 0.7.12",
+ "toml",
+ "tracing",
+]
+
+[[package]]
+name = "s3n-avs"
+version = "0.0.1-alpha"
+dependencies = [
+ "alloy",
+ "clap",
+ "eigen-nodeapi",
+ "eyre",
+ "futures",
+ "metrics",
+ "metrics-util",
+ "ntex",
+ "s3n-aggregator",
+ "s3n-challenger",
+ "s3n-config",
+ "s3n-metrics",
+ "s3n-operator",
+ "s3n-task-generator",
+ "serde",
+ "thiserror",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "s3n-bindings"
+version = "0.0.1-alpha"
+dependencies = [
+ "alloy",
+ "serde",
+]
+
+[[package]]
+name = "s3n-chainio"
+version = "0.0.1-alpha"
+dependencies = [
+ "alloy",
+ "alloy-provider",
+ "eigen-client-avsregistry",
+ "eigen-contract-bindings",
+ "eigen-logging",
+ "eigen-types",
+ "eigen-utils",
+ "eyre",
+ "futures-util",
+ "s3n-bindings",
+ "s3n-config",
+ "thiserror",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "s3n-challenger"
+version = "0.0.1-alpha"
+dependencies = [
+ "alloy",
+ "alloy-provider",
+ "eigen-utils",
+ "eyre",
+ "futures-util",
+ "s3n-bindings",
+ "s3n-chainio",
+ "s3n-config",
+ "s3n-task-generator",
+ "s3n-testing-utils",
+ "thiserror",
+ "tokio",
+ "toml",
+ "tracing",
+]
+
+[[package]]
+name = "s3n-cli-runner"
+version = "0.0.1-alpha"
+dependencies = [
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "s3n-config"
+version = "0.0.1-alpha"
+dependencies = [
+ "alloy",
+ "confy",
+ "eigen-logging",
+ "eigen-types",
+ "hex",
+ "ruint",
+ "s3n-testing-utils",
+ "serde",
+ "tempfile",
+ "thiserror",
+ "tokio",
+ "toml",
+ "tracing",
+]
+
+[[package]]
+name = "s3n-metrics"
+version = "0.0.1-alpha"
+dependencies = [
+ "alloy",
+ "alloy-provider",
+ "eigen-metrics",
+ "eyre",
+ "futures-util",
+ "metrics",
+ "metrics-util",
+ "reqwest 0.12.7",
+ "s3n-bindings",
+ "s3n-config",
+ "thiserror",
+ "tokio",
+]
+
+[[package]]
+name = "s3n-operator"
+version = "0.0.1-alpha"
+dependencies = [
+ "alloy",
+ "alloy-provider",
+ "ark-ec",
+ "ark-ff 0.4.2",
+ "eigen-cli",
+ "eigen-client-avsregistry",
+ "eigen-client-eth",
+ "eigen-crypto-bls",
+ "eigen-crypto-bn254",
+ "eigen-logging",
+ "eigen-metrics-collectors-rpc-calls",
+ "eigen-types",
+ "eigen-utils",
+ "eyre",
+ "futures-util",
+ "hex",
+ "rand_core",
+ "reqwest 0.12.7",
+ "rust-bls-bn254 0.1.0",
+ "s3n-aggregator",
+ "s3n-bindings",
+ "s3n-config",
+ "s3n-metrics",
+ "s3n-testing-utils",
+ "serde_json",
+ "tempfile",
+ "thiserror",
+ "tokio",
+ "toml",
+ "tracing",
+]
+
+[[package]]
+name = "s3n-task-generator"
+version = "0.0.1-alpha"
+dependencies = [
+ "alloy",
+ "alloy-provider",
+ "eigen-utils",
+ "eyre",
+ "futures-util",
+ "lazy_static",
+ "s3n-bindings",
+ "s3n-config",
+ "thiserror",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "s3n-testing-utils"
+version = "0.0.1-alpha"
+dependencies = [
+ "alloy",
+ "eigen-testing-utils",
+ "eigen-utils",
 ]
 
 [[package]]

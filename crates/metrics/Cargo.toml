@@ -1,11 +1,11 @@
 [package]
-name = "incredible-metrics"
+name = "s3n-metrics"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 repository.workspace = true
 license.workspace = true
-description = "incredible-metrics"
+description = "s3n-metrics"
     
 [lints]
 workspace = true
@@ -13,9 +13,9 @@ workspace = true
 [dependencies]
 alloy.workspace = true
 alloy-provider.workspace = true
-incredible-config.workspace = true
+s3n-config.workspace = true
 thiserror.workspace = true
-incredible-bindings.workspace = true
+s3n-bindings.workspace = true
 eyre.workspace = true
 futures-util.workspace = true
 

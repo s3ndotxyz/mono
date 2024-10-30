@@ -55,18 +55,18 @@ rand_core = "0.6"
 toml = "0.8"
 
 
-incredible-operator = {path = "crates/operator/" , features = ["default"]}
-incredible-aggregator = {path = "crates/aggregator/"}
+s3n-operator = {path = "crates/operator/" , features = ["default"]}
+s3n-aggregator = {path = "crates/aggregator/"}
 s3n = {path = "bin/s3n/"}
-incredible-cli-runner = {path = "crates/cli/"}
-incredible-config = {path = "crates/config/"}
-incredible-bindings = {path = "crates/bindings/"}
-incredible-metrics  = {path = "crates/metrics/"}
-incredible-avs = {path = "crates/avs/"}
-incredible-challenger = {path = "crates/challenger/"}
-incredible-chainio = {path = "crates/chainio/"}
-incredible-testing-utils = {path = "crates/testing-utils/"}
-incredible-task-generator = {path = "crates/task_generator/"}
+s3n-cli-runner = {path = "crates/cli/"}
+s3n-config = {path = "crates/config/"}
+s3n-bindings = {path = "crates/bindings/"}
+s3n-metrics  = {path = "crates/metrics/"}
+s3n-avs = {path = "crates/avs/"}
+s3n-challenger = {path = "crates/challenger/"}
+s3n-chainio = {path = "crates/chainio/"}
+s3n-testing-utils = {path = "crates/testing-utils/"}
+s3n-task-generator = {path = "crates/task_generator/"}
 
 # eigensdk-rs 
 eigen-client-avsregistry  = "0.1.0"

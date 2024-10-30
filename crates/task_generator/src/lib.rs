@@ -4,7 +4,7 @@ use alloy::{
     rpc::types::TransactionReceipt,
 };
 use eigen_utils::get_signer;
-use incredible_bindings::IncredibleSquaringTaskManager::{
+use s3n_bindings::IncredibleSquaringTaskManager::{
     self, NonSignerStakesAndSignature, Task, TaskResponse,
 };
 use lazy_static::lazy_static;

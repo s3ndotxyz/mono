@@ -15,7 +15,7 @@ use eigen_utils::{
     get_provider, get_signer,
 };
 use error::ChainIoError;
-use incredible_bindings::{
+use s3n_bindings::{
     IncredibleSquaringServiceManager::{self, incredibleSquaringTaskManagerReturn},
     IncredibleSquaringTaskManager::{self, G1Point, Task, TaskResponse, TaskResponseMetadata},
 };

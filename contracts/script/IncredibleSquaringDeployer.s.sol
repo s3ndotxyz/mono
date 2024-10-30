@@ -215,7 +215,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
                 )
             )
         );
-        contractsRegistry.registerContract("incredible_squaring_service_manager", address(incredibleSquaringServiceManager));
+        contractsRegistry.registerContract("s3n_service_manager", address(incredibleSquaringServiceManager));
 
         incredibleSquaringTaskManager = IncredibleSquaringTaskManager(
             address(
@@ -227,7 +227,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
             )
         );
 
-        contractsRegistry.registerContract("incredible_squaring_task_manager", address(incredibleSquaringTaskManager));
+        contractsRegistry.registerContract("s3n_task_manager", address(incredibleSquaringTaskManager));
         
         registryCoordinator = regcoord.RegistryCoordinator(
             address(
@@ -238,7 +238,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
                 )
             )
         );
-        contractsRegistry.registerContract("incredible_squaring_registry_coordinator", address(registryCoordinator));
+        contractsRegistry.registerContract("s3n_registry_coordinator", address(registryCoordinator));
 
         blsApkRegistry = IBLSApkRegistry(
             address(
@@ -271,7 +271,7 @@ contract IncredibleSquaringDeployer is Script, Utils {
         operatorStateRetriever = new OperatorStateRetriever();
         erc20Mock.mint(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,10e18);
         contractsRegistry.registerContract("erc20MockStrategy", address(erc20MockStrategy));
-        contractsRegistry.registerContract("incredible_squaring_operator_state_retriever", address(operatorStateRetriever));
+        contractsRegistry.registerContract("s3n_operator_state_retriever", address(operatorStateRetriever));
 
 
         // Second, deploy the *implementation* contracts, using the *proxy contracts* as inputs

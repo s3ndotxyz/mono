@@ -13,11 +13,11 @@ use eigen_testing_utils::anvil_constants::{
     ANVIL_HTTP_URL,
 };
 use eigen_types::operator::Operator;
-use incredible_avs::builder::{AvsBuilder, DefaultAvsLauncher, LaunchAvs};
+use s3n_avs::builder::{AvsBuilder, DefaultAvsLauncher, LaunchAvs};
 use s3n_config::IncredibleConfig;
-use incredible_testing_utils::{
-    get_incredible_squaring_operator_state_retriever, get_incredible_squaring_registry_coordinator,
-    get_incredible_squaring_strategy_address, get_incredible_squaring_task_manager,
+use s3n_testing_utils::{
+    get_s3n_operator_state_retriever, get_s3n_registry_coordinator,
+    get_s3n_strategy_address, get_s3n_task_manager,
 };
 use rust_bls_bn254::keystores::base_keystore::Keystore;
 use std::ffi::OsString;
@@ -143,7 +143,7 @@ pub struct AvsCommand<Ext: Args + fmt::Debug = NoArgs> {
     )]
     operator_to_avs_registration_sig_salt: String,
 
-    #[arg(long, value_name = "SOCKET", default_value = "incredible-socket")]
+    #[arg(long, value_name = "SOCKET", default_value = "s3n-socket")]
     socket: String,
 
     #[arg(long, value_name = "QUORUM_NUMBER", default_value = "00")]
@@ -233,10 +233,10 @@ impl<Ext: clap::Args + fmt::Debug + Send + Sync + 'static> AvsCommand<Ext> {
     pub async fn execute(self: Box<Self>) -> eyre::Result<()> {
         init_logger(LogLevel::Info);
         let registry_coordinator_address_anvil =
-            get_incredible_squaring_registry_coordinator().await;
+            get_s3n_registry_coordinator().await;
 
         let operator_state_retriever_address_anvil =
-            get_incredible_squaring_operator_state_retriever().await;
+            get_s3n_operator_state_retriever().await;
 
         let delegation_manager_address_anvil =
             get_delegation_manager_address(ANVIL_HTTP_URL.to_string()).await;
@@ -245,9 +245,9 @@ impl<Ext: clap::Args + fmt::Debug + Send + Sync + 'static> AvsCommand<Ext> {
 
         let strategy_manager_address_anvil =
             get_strategy_manager_address(ANVIL_HTTP_URL.to_string()).await;
-        let erc20_mock_strategy_address_anvil = get_incredible_squaring_strategy_address().await;
-        let incredible_squaring_task_manager_address_anvil =
-            get_incredible_squaring_task_manager().await;
+        let erc20_mock_strategy_address_anvil = get_s3n_strategy_address().await;
+        let s3n_task_manager_address_anvil =
+            get_s3n_task_manager().await;
 
         let default_anvil = AnvilValues::new(
             registry_coordinator_address_anvil,
@@ -347,7 +347,7 @@ impl<Ext: clap::Args + fmt::Debug + Send + Sync + 'static> AvsCommand<Ext> {
             strategy_manager_addr.unwrap_or(strategy_manager_address_anvil.to_string()),
         );
         config.set_task_manager_address(
-            task_manager_addr.unwrap_or(incredible_squaring_task_manager_address_anvil.to_string()),
+            task_manager_addr.unwrap_or(s3n_task_manager_address_anvil.to_string()),
         );
         let now = SystemTime::now();
         let mut expiry: U256 = U256::from(0);

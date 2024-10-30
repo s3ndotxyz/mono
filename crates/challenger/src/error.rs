@@ -1,6 +1,6 @@
 use alloy::contract::Error as AlloyError;
 use alloy::sol_types::Error as AlloySolTypeError;
-use incredible_chainio::error::ChainIoError;
+use s3n_chainio::error::ChainIoError;
 use s3n_config::error::ConfigError;
 use thiserror::Error;
 

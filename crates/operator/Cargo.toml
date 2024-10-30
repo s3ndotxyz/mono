@@ -1,5 +1,5 @@
 [package]
-name = "incredible-operator"
+name = "s3n-operator"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -13,9 +13,9 @@ workspace = true
 [dependencies]
 alloy.workspace = true
 alloy-provider.workspace = true
-incredible-config.workspace = true
+s3n-config.workspace = true
 thiserror.workspace = true
-incredible-bindings.workspace = true
+s3n-bindings.workspace = true
 eyre.workspace = true
 futures-util.workspace = true
 
@@ -25,12 +25,12 @@ eigen-crypto-bls.workspace = true
 eigen-cli.workspace = true
 eigen-types.workspace = true
 
-incredible-metrics.workspace = true
+s3n-metrics.workspace = true
 
 rust-bls-bn254.workspace = true
 
 #incredible
-incredible-aggregator.workspace = true
+s3n-aggregator.workspace = true
 reqwest.workspace = true
 
 hex = {version =  "0.4.3" , features = ["alloc"]}
@@ -46,7 +46,7 @@ eigen-client-eth.workspace = true
 eigen-utils.workspace = true
 
 [dev-dependencies]
-incredible-testing-utils.workspace = true
+s3n-testing-utils.workspace = true
 tempfile.workspace = true
 ark-ec = "0.4.2"
 ark-ff = "0.4.0"

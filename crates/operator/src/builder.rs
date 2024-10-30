@@ -17,8 +17,8 @@ use eigen_logging::get_logger;
 use eigen_types::operator::OperatorId;
 use eyre::Result;
 use futures_util::StreamExt;
-use incredible_aggregator::rpc_server::SignedTaskResponse;
-use incredible_bindings::IncredibleSquaringTaskManager::{self, NewTaskCreated, TaskResponse};
+use s3n_aggregator::rpc_server::SignedTaskResponse;
+use s3n_bindings::IncredibleSquaringTaskManager::{self, NewTaskCreated, TaskResponse};
 use s3n_config::IncredibleConfig;
 use rust_bls_bn254::keystores::base_keystore::Keystore;
 use tracing::info;
@@ -129,7 +129,7 @@ impl OperatorBuilder {
                         taskIndex: data.taskIndex,
                     };
                     info!("operator picked up a new task , index: {} ", data.taskIndex);
-                    incredible_metrics::increment_num_tasks_received();
+                    s3n_metrics::increment_num_tasks_received();
                     let task_response = self.process_new_task(new_task_created);
                     let signed_task_response = self.sign_task_response(task_response)?;
                     let _ = self
@@ -166,9 +166,9 @@ mod tests {
     use ark_ec::AffineRepr;
     use ark_ff::PrimeField;
     use eigen_crypto_bn254::utils::verify_message;
-    use incredible_testing_utils::{
-        get_incredible_squaring_operator_state_retriever,
-        get_incredible_squaring_registry_coordinator,
+    use s3n_testing_utils::{
+        get_s3n_operator_state_retriever,
+        get_s3n_registry_coordinator,
     };
     use std::str::FromStr;
     use IncredibleSquaringTaskManager::Task;
@@ -198,12 +198,12 @@ mod tests {
         let mut s3n_config: IncredibleConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         s3n_config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );
@@ -242,12 +242,12 @@ mod tests {
         let mut s3n_config: IncredibleConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         s3n_config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );
@@ -264,12 +264,12 @@ mod tests {
         let mut s3n_config: IncredibleConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         s3n_config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );
@@ -286,12 +286,12 @@ mod tests {
         let mut s3n_config: IncredibleConfig =
             toml::from_str(S3N_CONFIG_FILE).unwrap();
         s3n_config.set_registry_coordinator_addr(
-            get_incredible_squaring_registry_coordinator()
+            get_s3n_registry_coordinator()
                 .await
                 .to_string(),
         );
         s3n_config.set_operator_state_retriever(
-            get_incredible_squaring_operator_state_retriever()
+            get_s3n_operator_state_retriever()
                 .await
                 .to_string(),
         );

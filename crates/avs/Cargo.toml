@@ -1,5 +1,5 @@
 [package]
-name = "incredible-avs"
+name = "s3n-avs"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -19,12 +19,12 @@ metrics.workspace = true
 metrics-util = "0.17.0"
 
 #incredible
-incredible-config.workspace = true
-incredible-operator.workspace = true
-incredible-challenger.workspace = true
-incredible-aggregator.workspace = true
-incredible-task-generator.workspace = true
-incredible-metrics.workspace = true
+s3n-config.workspace = true
+s3n-operator.workspace = true
+s3n-challenger.workspace = true
+s3n-aggregator.workspace = true
+s3n-task-generator.workspace = true
+s3n-metrics.workspace = true
 eigen-nodeapi.workspace = true
 #tokio
 tokio.workspace = true

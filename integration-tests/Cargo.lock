@@ -3124,7 +3124,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "incredible-aggregator"
+name = "s3n-aggregator"
 version = "0.0.1-alpha"
 dependencies = [
  "alloy",
@@ -3141,10 +3141,10 @@ dependencies = [
  "eyre",
  "futures-util",
  "hex",
- "incredible-bindings",
- "incredible-chainio",
- "incredible-config",
- "incredible-metrics",
+ "s3n-bindings",
+ "s3n-chainio",
+ "s3n-config",
+ "s3n-metrics",
  "jsonrpc-core",
  "jsonrpc-http-server",
  "serde",
@@ -3155,7 +3155,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "incredible-avs"
+name = "s3n-avs"
 version = "0.0.1-alpha"
 dependencies = [
  "alloy",
@@ -3163,12 +3163,12 @@ dependencies = [
  "eigen-nodeapi",
  "eyre",
  "futures",
- "incredible-aggregator",
- "incredible-challenger",
- "incredible-config",
- "incredible-metrics",
- "incredible-operator",
- "incredible-task-generator",
+ "s3n-aggregator",
+ "s3n-challenger",
+ "s3n-config",
+ "s3n-metrics",
+ "s3n-operator",
+ "s3n-task-generator",
  "metrics",
  "metrics-util",
  "ntex",
@@ -3179,7 +3179,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "incredible-bindings"
+name = "s3n-bindings"
 version = "0.0.1-alpha"
 dependencies = [
  "alloy",
@@ -3187,7 +3187,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "incredible-chainio"
+name = "s3n-chainio"
 version = "0.0.1-alpha"
 dependencies = [
  "alloy",
@@ -3199,15 +3199,15 @@ dependencies = [
  "eigen-utils",
  "eyre",
  "futures-util",
- "incredible-bindings",
- "incredible-config",
+ "s3n-bindings",
+ "s3n-config",
  "thiserror",
  "tokio",
  "tracing",
 ]
 
 [[package]]
-name = "incredible-challenger"
+name = "s3n-challenger"
 version = "0.0.1-alpha"
 dependencies = [
  "alloy",
@@ -3215,10 +3215,10 @@ dependencies = [
  "eigen-utils",
  "eyre",
  "futures-util",
- "incredible-bindings",
- "incredible-chainio",
- "incredible-config",
- "incredible-testing-utils",
+ "s3n-bindings",
+ "s3n-chainio",
+ "s3n-config",
+ "s3n-testing-utils",
  "thiserror",
  "tokio",
  "toml",
@@ -3226,7 +3226,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "incredible-cli-runner"
+name = "s3n-cli-runner"
 version = "0.0.1-alpha"
 dependencies = [
  "tokio",
@@ -3234,7 +3234,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "incredible-config"
+name = "s3n-config"
 version = "0.0.1-alpha"
 dependencies = [
  "alloy",
@@ -3251,22 +3251,22 @@ dependencies = [
 ]
 
 [[package]]
-name = "incredible-metrics"
+name = "s3n-metrics"
 version = "0.0.1-alpha"
 dependencies = [
  "alloy",
  "alloy-provider",
  "eyre",
  "futures-util",
- "incredible-bindings",
- "incredible-config",
+ "s3n-bindings",
+ "s3n-config",
  "metrics",
  "metrics-util",
  "thiserror",
 ]
 
 [[package]]
-name = "incredible-operator"
+name = "s3n-operator"
 version = "0.0.1-alpha"
 dependencies = [
  "alloy",
@@ -3283,10 +3283,10 @@ dependencies = [
  "eyre",
  "futures-util",
  "hex",
- "incredible-aggregator",
- "incredible-bindings",
- "incredible-config",
- "incredible-metrics",
+ "s3n-aggregator",
+ "s3n-bindings",
+ "s3n-config",
+ "s3n-metrics",
  "rand_core",
  "reqwest 0.12.7",
  "rust-bls-bn254 0.1.0",
@@ -3313,13 +3313,13 @@ dependencies = [
  "eigen-utils",
  "eyre",
  "hex",
- "incredible-aggregator",
- "incredible-avs",
- "incredible-cli-runner",
- "incredible-config",
- "incredible-metrics",
- "incredible-operator",
- "incredible-testing-utils",
+ "s3n-aggregator",
+ "s3n-avs",
+ "s3n-cli-runner",
+ "s3n-config",
+ "s3n-metrics",
+ "s3n-operator",
+ "s3n-testing-utils",
  "metrics-exporter-prometheus",
  "metrics-util",
  "rust-bls-bn254 0.1.0",
@@ -3327,7 +3327,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "incredible-task-generator"
+name = "s3n-task-generator"
 version = "0.0.1-alpha"
 dependencies = [
  "alloy",
@@ -3335,8 +3335,8 @@ dependencies = [
  "eigen-utils",
  "eyre",
  "futures-util",
- "incredible-bindings",
- "incredible-config",
+ "s3n-bindings",
+ "s3n-config",
  "lazy_static",
  "thiserror",
  "tokio",
@@ -3344,7 +3344,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "incredible-testing-utils"
+name = "s3n-testing-utils"
 version = "0.0.1-alpha"
 dependencies = [
  "alloy",
@@ -3395,14 +3395,14 @@ dependencies = [
  "eigen-testing-utils",
  "eigen-utils",
  "eyre",
- "incredible-aggregator",
- "incredible-bindings",
- "incredible-challenger",
- "incredible-config",
- "incredible-operator",
+ "s3n-aggregator",
+ "s3n-bindings",
+ "s3n-challenger",
+ "s3n-config",
+ "s3n-operator",
  "s3n",
- "incredible-task-generator",
- "incredible-testing-utils",
+ "s3n-task-generator",
+ "s3n-testing-utils",
  "serial_test",
  "tokio",
  "toml",
