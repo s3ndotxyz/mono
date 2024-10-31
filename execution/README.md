@@ -22,8 +22,8 @@
 
 ## To-do
 
-[ ] Setup notarisation queues
-[ ] Implement schema system for data fetching
+- [ ] Setup notarisation queues
+- [ ] Implement schema system for data fetching
 
 
 ## License
