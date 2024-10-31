@@ -1,87 +1,140 @@
+<br>
+
 <p align="center">
   <img src="./assets/s3n.png" width="300" alt="0xzero.org" />
+</p>
+<br>
+
+<p align="center">
+   <a href="https://github.com/0xZeroLabs/s3n/network/members"><img src="https://img.shields.io/github/forks/0xZeroLabs/s3n?style=social"></a>
+   <img src="https://img.shields.io/github/stars/0xZeroLabs/s3n?style=social">
+   <a href="https://x.com/0xZeroOrg"><img src="https://img.shields.io/twitter/follow/0xZeroLabs.svg?style=social"></a>
+   <br>
+   <img src="https://img.shields.io/github/languages/count/0xZeroLabs/s3n">
+   <a href="https://github.com/0xZeroLabs/s3n/issues"><img src="https://img.shields.io/github/issues/0xZeroLabs/s3n"></a>
+   <a href="https://github.com/0xZeroLabs/s3n/pulls"><img src="https://img.shields.io/github/issues-pr-raw/0xZeroLabs/s3n"></a>
+   <a href="https://github.com/0xZeroLabs/s3n/graphs/contributors"><img src="https://img.shields.io/github/contributors-anon/0xZeroLabs/s3n"></a>
+   <img src="https://img.shields.io/github/languages/code-size/0xZeroLabs/s3n">
 </p>
 
 # S3N
 
-[![Tests](https://github.com/0xZeroLabs/s3n/actions/workflows/integration.yml/badge.svg)](https://github.com/0xZeroLabs/s3n/actions/workflows/integration.yml)
-
 S3N is an AVS built on EigenLayer designed to notarise and commit to credentials, replacing the need for data signing by issuers.
 
-## Dependencies
+# ⚙️ Set Up
 
-- [Foundry](https://github.com/foundry-rs/foundry)
-- [Docker](https://www.docker.com/) 
+To set up the environment, create a `.env` file with the usual Othentic
+configurations (see the `.env.example`).
 
 
-## To run 
+# ✈️ Install the Othentic CLI 
+Installing Othentic CLI with `npm`:
 
-- Start anvil in a separate terminal 
-```
-make start-anvil
-```
-
-- Single command AVS start using the following command (default values)
-
-```bash
-cargo run --bin s3n  start
+```console
+npm i -g @othentic/othentic-cli
 ```
 
-- To change the parameters, provide path to a toml config file 
+Verify installation by the command:
+
+```console
+othentic-cli -h
 ```
-cargo run --bin s3n  start --config-path <PATH>
-```
-We have an example file [s3n_config.toml](https://github.com/0xZeroLabs/s3n/tree/master/s3n_config.toml) for reference.
+# 🧰 Prerequisites
+You need to register 3 self-deploy Operators with a minimum of 0.01 stETH.
 
-This command launches 4 crates together 
-- Operator : It listens for new tasks , responds them by signing with their bls key and send the signed response to the aggregator.
-- Aggregator : Sets up an rpc client to receive signed task responses from operator, aggregates the signatures , calls the respondToTask function in the TaskManager contract.
-- Challenger : It listens for new tasks , checks the operators response, if found wrong, it raises a challenge by calling the `raiseAndResolveChallenge` function in the task manager contract.
-- Task Spam : It creates a new task every 10 seconds by calling the `createNewTask` function in the task manager contract.
+* Deployer account:
+   * A minimum of 1.5 holETH (Faucet)
+   * A minimum of 5 Amoy MATIC (Faucet)
+* Operator account x 3 (Script):
+   * A minimum of 0.02 holETH on Holesky
+* ERC-20 token address
 
+# 📑 Contracts Deployment
+To deploy the AVS’s on-chain components, run the following command:
 
-## Testing 
-
-- To run unit tests
-```
-make pr
-```
-
-- To run integration tests 
-```
-make integration-tests
+``` console
+othentic-cli network deploy \\
+    --erc20 0x73967c6a0904aA032C103b4104747E88c566B1A2 \\
+    --l1-initial-deposit 1000000000000000000 \\
+    --l2-initial-deposit 2000000000000000000 \\
+    --name test-avs-name
 ```
 
-## Architecture
+# 🏋️‍♂️ Operators Setup
 
-The architecture of the AVS contains:
+Register as an operator for both EigenLayer and the AVS
+``` console
+othentic-cli operator register
+```
 
-- [Eigenlayer core](https://github.com/Layr-Labs/eigenlayer-contracts/tree/master) contracts
-- AVS contracts
-  - [ServiceManager](contracts/src/S3NServiceManager.sol) which will eventually contain slashing logic but for M2 is just a placeholder.
-  - [TaskManager](contracts/src/S3NTaskManager.sol) which contains [task creation](contracts/src/S3NTaskManager.sol#L83) and [task response](contracts/src/S3NTaskManager.sol#L102) logic.
-  - The [challenge](contracts/src/S3NTaskManager.sol#L176) logic could be separated into its own contract, but we have decided to include it in the TaskManager for this simple task.
-  - Set of [registry contracts](https://github.com/Layr-Labs/eigenlayer-middleware) to manage operators opted in to this avs
-- Task Generator
-  - in a real world scenario, this could be a separate entity, but for this simple demo, the aggregator also acts as the task generator
-- Aggregator
-  - aggregates BLS signatures from operators and posts the aggregated response to the task manager
-  - For this simple demo, the aggregator is not an operator, and thus does not need to register with eigenlayer or the AVS contract. It's IP address is simply hardcoded into the operators' config.
-- Operators
-  - Square the number sent to the task manager by the task generator, sign it, and send it to the aggregator
+# 🔁 Convert ETH into stETH [Optional]
+This command converts 0.012 ETH into stETH before depositing it into EigenLayer pool:
 
- ![architecture (1)](https://github.com/user-attachments/assets/389349cd-931f-448c-bf2c-ea49af133542)
+``` console
+othentic-cli operator deposit --strategy stETH --shares 0.01 --convert 0.012 
+```
 
+Activate your Operator by depositing into EigenLayer 
+Deposit 0.01 stETH into EigenLayer pool.
 
-## Default Configuration
-- Metrics http endpoint - `http://localhost:9001/metrics`
-- Aggregator Rpc endpoint - `127.0.0.1:8080`
-- Operator - `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266` (anvil's 0 index key)
-
-
-## Dependencies 
-- [eigensdk-rs](https://github.com/Layr-Labs/eigensdk-rs)
-- [rust-bls-bn254](https://github.com/Layr-Labs/rust-bls-bn254/tree/main) 
+``` console 
+othentic-cli operator deposit --strategy stETH --shares 0.01
+```
+✅  Your internal Operators are now ready to opt-in to your AVS.
 
 
 
+
+## ▶️ Run the demo
+We provide a sample docker-compose configuration which sets up the following
+services:
+
+- Aggregator node
+- 3 Attester nodes
+- Validation Service endpoint
+- Execution Service endpoint
+- Sync Shares of operators across layers
+
+
+run:
+```console
+docker-compose up --build
+```
+
+> [!NOTE]
+> This might take a few minutes when building the images
+
+
+# 🚀 Executing a task
+To execute a task we send a 
+POST request to the Task Performer service:
+
+
+``` console 
+curl -X POST <http://localhost:4003/task/execute>
+```
+✅  Your demo AVS is functional!
+
+
+### Updating the Othentic node version
+To update the `othentic-cli` inside the docker images to the latest version, you
+need to rebuild the images using the following command:
+```console
+docker-compose build --no-cache
+```
+
+## 🏗️ Architecture
+The Othentic Attester nodes communicate with an AVS WebAPI endpoint which
+validates tasks on behalf of the nodes. The attesters then sign the tasks based
+on the AVS WebAPI response.
+
+Attester nodes can either all communicate with a centralized endpoint or each
+implement their own validation logic.
+
+### AVS WebAPI
+```
+POST task/validate returns (bool) {"proofOfTask": "{proofOfTask}"};
+```
+
+### Sync Shares
+sync the shares of operators between L1 and L2 at a fixed interval. The default interval is 12h and can be modified inside the docker-compose file
