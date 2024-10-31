@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="./assets/s3n.png" width="300" alt="0xzero.org" />
+</p>
+
 # S3N
+
+[![Tests](https://github.com/0xZeroLabs/s3n/actions/workflows/integration.yml/badge.svg)](https://github.com/0xZeroLabs/s3n/actions/workflows/integration.yml)
 
 S3N is an AVS built on EigenLayer designed to notarise and commit to credentials, replacing the need for data signing by issuers.
 
