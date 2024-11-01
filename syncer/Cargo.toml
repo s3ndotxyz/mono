@@ -1,0 +1,9 @@
+[package]
+name = "syncer"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dotenv = "0.15"
+ethers-rs = "0.2"
+secp256k1 = "0.27"
