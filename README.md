@@ -20,9 +20,9 @@
   <a href="https://github.com/0xZeroLabs/s3n/blob/master/LICENSE"><img src="https://img.shields.io/github/license/0xZeroLabs/s3n?style"></a>
 </p>
 
-# S3N
+# S3N Core
 
-S3N is an AVS built on [EigenLayer](https://eigenlayer.xyz) through the [Othentic](https://othentic.xyz) stack, designed to notarise and commit to credentials, replacing the need for data signing by issuers.
+S3N Core is an AVS built on [EigenLayer](https://eigenlayer.xyz) through the [Othentic](https://othentic.xyz) stack, designed to notarise and commit to credentials, replacing the need for data signing by issuers.
 
 # ⚙️ Set Up
 
