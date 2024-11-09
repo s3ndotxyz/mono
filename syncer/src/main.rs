@@ -20,14 +20,6 @@ fn main() {
         exit(1);
     });
 
-    if !private_key_syncer.starts_with("0x") {
-        private_key_syncer = format!("0x{}", private_key_syncer);
-    }
-
-    if !private_key_deployer.starts_with("0x") {
-        private_key_deployer = format!("0x{}", private_key_deployer);
-    }
-
     let deployer_address = compute_ethereum_address(&private_key_deployer).unwrap_or_else(|e| {
         eprintln!("Invalid PRIVATE_KEY_DEPLOYER: {}", e);
         exit(1);
