@@ -8,8 +8,8 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   sodipodi:docname="drawing.svg"
-   inkscape:export-filename="..\Documents\Zero\s3n\assets\s3n.svg"
+   sodipodi:docname="s3n.svg"
+   inkscape:export-filename="..\..\zero-docs-v2\logo\s3n.png"
    inkscape:export-xdpi="727.47522"
    inkscape:export-ydpi="727.47522"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -27,13 +27,13 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="2.0401423"
-     inkscape:cx="289.4406"
-     inkscape:cy="85.043088"
-     inkscape:window-width="1920"
-     inkscape:window-height="1057"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
+     inkscape:cx="112.00199"
+     inkscape:cy="85.043087"
+     inkscape:window-width="1350"
+     inkscape:window-height="1041"
+     inkscape:window-x="130"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer1" />
   <defs
      id="defs1">
@@ -52,11 +52,11 @@
        xml:space="preserve"
        transform="matrix(3.2580353,0,0,3.2580353,-384.63041,-613.52968)"
        id="text1"
-       style="font-family:'Space Grotesk';-inkscape-font-specification:'Space Grotesk';white-space:pre;shape-inside:url(#rect1);fill:#ff8080"><tspan
+       style="font-family:'Space Grotesk';-inkscape-font-specification:'Space Grotesk';white-space:pre;shape-inside:url(#rect1);fill:#f9f9f9"><tspan
          x="117.33594"
          y="195.88478"
-         id="tspan4"><tspan
+         id="tspan3"><tspan
            style="font-family:'Pixelify Sans';-inkscape-font-specification:'Pixelify Sans'"
-           id="tspan1">S3N=</tspan></tspan></text>
+           id="tspan2">S3N=</tspan></tspan></text>
   </g>
 </svg>

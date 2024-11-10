@@ -1,82 +1,117 @@
-<p align="center">
-    <img src="./tlsn-banner.png" width=1280 />
-</p>
+# S3N AVS Node
 
-![MIT licensed][mit-badge]
-![Apache licensed][apache-badge]
-[![Build Status][actions-badge]][actions-url]
+For support contact @EulerLagrange217 on telegram
 
-[mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[apache-badge]: https://img.shields.io/github/license/saltstack/salt
-[actions-badge]: https://github.com/tlsnotary/tlsn/actions/workflows/ci.yml/badge.svg?branch=dev
-[actions-url]: https://github.com/tlsnotary/tlsn/actions?query=workflow%3Aci+branch%3Adev
+## Introduction
 
-[Website](https://tlsnotary.org) |
-[Documentation](https://docs.tlsnotary.org) |
-[API Docs](https://tlsnotary.github.io/tlsn) |
-[Discord](https://discord.gg/9XwESXtcN7)
+The S3N node must be run with a Intel SGX with SGX2 enabled. If you want to use a cloud provider, please use one of these:
 
-# TLSNotary
+- Azure (https://learn.microsoft.com/en-us/azure/confidential-computing/quick-create-portal)
+- OVH (https://help.ovhcloud.com/csm/en-dedicated-servers-intel-sgx?id=kb_article_view&sysparm_article=KB0044005)
 
-**Data provenance and privacy with secure multi-party computation**
+We recommend you use Ubuntu 22.04
 
-## To-do
+We DO NOT support AWS Enclaves!
 
-- [ ] Setup notarisation queues
-- [ ] Implement schema system for data fetching
+## Check SGX
 
+First we should check you are on a valid SGX machine.
 
-## License
-All crates in this repository are licensed under either of
+Head over to https://support.fortanix.com/hc/en-us/articles/4414753648788-SGX-Detect-Tool and download the binary for your operating system.
 
-- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
-- [MIT license](http://opensource.org/licenses/MIT)
+Ubuntu 22.04:
+`wget https://download.fortanix.com/sgx-detect/ubuntu22.04/sgx-detect?_gl=1*1j4w6dh*_gcl_au*MTM1MDY4MDQ2NS4xNzE4ODUwMTk1 -O sgx-detect`
+`chmod +x sgx-detect`
+`sudo ./sgx-detect`
 
-at your option.
+You should see:
+<Enter screenshot>
 
-## Branches
+If you see any red on the output, please contact @EulerLagrange217 on telegram
 
-- [`main`](https://github.com/tlsnotary/tlsn/tree/main)
-  - Default branch — points to the latest release.
-  - This is stable and suitable for most users.
-- [`dev`](https://github.com/tlsnotary/tlsn/tree/dev)
-  - Development branch — contains the latest PRs.
-  - Developers should submit their PRs against this branch.
+## Register Node Operator with EigenLayer
 
-## Directory
+The following is not S3N specific but for EigenLayer. We will be summarizing the following verboase guide: https://docs.eigenlayer.xyz/eigenlayer/operator-guides/operator-installation
 
-- [examples](./crates/examples/): Examples on how to use the TLSNotary protocol.
-- [tlsn-prover](./crates/prover/): The library for the prover component.
-- [tlsn-verifier](./crates/verifier/): The library for the verifier component.
-- [notary](./crates/notary/): Implements the [notary server](https://docs.tlsnotary.org/intro.html#tls-verification-with-a-general-purpose-notary) and its client.
-- [components](./crates/components/): Houses low-level libraries.
+1. Install EigenLayer-CLI
 
-This repository contains the source code for the Rust implementation of the TLSNotary protocol. For additional tools and implementations related to TLSNotary, visit <https://github.com/tlsnotary>. This includes repositories such as [`tlsn-js`](https://github.com/tlsnotary/tlsn-js), [`tlsn-extension`](https://github.com/tlsnotary/tlsn-extension), [`explorer`](https://github.com/tlsnotary/explorer), among others.
+For Ubuntu 22.04:
+`install-eigenlayer-cli`
 
+2. Create ECDSA and BLS keys
 
-## Development
+`make generate-keys`
 
-> [!IMPORTANT]
-> **Note on Rust-to-WASM Compilation**: This project requires compiling Rust into WASM, which needs [`clang`](https://clang.llvm.org/) version 16.0.0 or newer. MacOS users, be aware that Xcode's default `clang` might be older. If you encounter the error `No available targets are compatible with triple "wasm32-unknown-unknown"`, it's likely due to an outdated `clang`. Updating `clang` to a newer version should resolve this issue.
-> 
-> For MacOS aarch64 users, if Apple's default `clang` isn't working, try installing `llvm` via Homebrew (`brew install llvm`). You can then prioritize the Homebrew `clang` over the default macOS version by modifying your `PATH`. Add the following line to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
-> ```sh
-> export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
-> ```
+OR
 
-If you run into this error:
-```
-Could not find directory of OpenSSL installation, and this `-sys` crate cannot
-  proceed without this knowledge. If OpenSSL is installed and this crate had
-  trouble finding it,  you can set the `OPENSSL_DIR` environment variable for the
-  compilation process.
-```
-Make sure you have the development packages of OpenSSL installed (`libssl-dev` on Ubuntu or `openssl-devel` on Fedora).
+`eigenlayer operator keys create --key-type ecdsa s3n`
+`eigenlayer operator keys create --key-type bls s3n`
 
-## Contribution
+To check if you did it right you can run:
 
-Unless you explicitly state otherwise, any contribution intentionally submitted
-for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
-dual licensed as above, without any additional terms or conditions.
+`make list-keys`
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+<insert image>
+
+3. Fund ECDSA Wallet with testnet ETH
+
+We need to load your operator wallet with some holesky eth to submit transactions. See: https://docs.eigenlayer.xyz/eigenlayer/restaking-guides/restaking-user-guide/testnet/obtaining-testnet-eth-and-liquid-staking-tokens-lsts
+
+4. Use some Holesky eth to get holesky stETH:
+
+https://stake-holesky.testnet.fi/
+
+5. Operator config
+
+We need to generate some metadata so eigenlayer can show you nicely in their UI.
+
+I would recommend forking this repo: https://github.com/Hmac512/eigenpod and changing the values to what you want.
+
+Run:
+
+`eigenlayer operator config create`
+
+Say yes to populating the config
+
+> Enter your operator address: 0xfe8463ca0a9b436fdc5f75709ad5a43961802d68
+> Enter your earnings address (default to your operator address): 0xfe8463ca0a9b436fdc5f75709ad5a43961802d68
+> Enter your ETH rpc url: https://ethereum-holesky.publicnode.com
+> Select your network: holesky
+> Select your signer type: local_keystore
+> Enter your ecdsa key path: /home/ubuntu/.eigenlayer/operator_keys/s3n.ecdsa.key.json
+
+This will generate a operator.yaml file that should look like:
+
+`operator:
+    address: 0xFE8463CA0A9b436FdC5f75709AD5a43961802d68
+    earnings_receiver_address: 0xFE8463CA0A9b436FdC5f75709AD5a43961802d68
+    delegation_approver_address: "0x0000000000000000000000000000000000000000"
+    staker_opt_out_window_blocks: 0
+    metadata_url: "https://raw.githubusercontent.com/Hmac512/eigenpod/main/metadata.json?"
+el_delegation_manager_address: 0xA44151489861Fe9e3055d95adC98FbD462B948e7
+eth_rpc_url: https://ethereum-holesky.publicnode.com
+private_key_store_path: /home/ubuntu/.eigenlayer/operator_keys/s3n.ecdsa.key.json
+signer_type: local_keystore
+chain_id: 17000
+fireblocks:
+    api_key: ""
+    secret_key: ""
+    base_url: ""
+    vault_account_name: ""
+    secret_storage_type: ""
+    aws_region: ""
+    timeout: 0
+web3:
+    url: ""`
+
+Remember to fill out the metadata_url to your forked repo.
+
+Make a backup of your operator.yaml for convenience
+
+6. Register Node Operator
+
+run:
+
+`make register-eigen-operator`
+OR
+`eigenlayer operator register operator.yaml`
