@@ -1,7 +1,7 @@
 <br>
 
 <p align="center">
-  <img src="./assets/s3n.png" width="300" alt="0xzero.org" />
+  <img src="./assets/s3n-social.jpg" width="300" alt="0xzero.org" />
 </p>
 <br>
 
