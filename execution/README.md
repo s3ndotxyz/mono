@@ -1,6 +1,6 @@
 # S3N AVS Node
 
-For support contact @EulerLagrange217 on telegram
+For support contact @lordewan on telegram
 
 ## Introduction
 
