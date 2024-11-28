@@ -74,30 +74,3 @@ docker-build:
 	docker build . --tag s3nlabseulerlagrange/s3n-avs-node:$(GIT_HASH)
 	docker push s3nlabseulerlagrange/s3n-avs-node:$(GIT_HASH)
 
-.PHONY: install-eigenlayer-cli
-install-eigenlayer-cli:
-	@echo "Installing Go"
-	@sudo snap install go --channel 1.21/stable --classic
-	@echo "Installing EigenLayer CLI"
-	@go install github.com/Layr-Labs/eigenlayer-cli/cmd/eigenlayer@latest
-	@echo -e "\nexport GOBIN=\$GOPATH/bin\nexport PATH=\$GOBIN:\$PATH" >> $HOME/.bashrc
-
-.PHONY: generate-keys
-generate-keys:
-	@echo "Generating ECDSA Key"
-	@eigenlayer operator keys create --key-type ecdsa --insecure s3n
-	@echo "Generating BLS Key"
-	@eigenlayer operator keys create --key-type bls --insecure s3n
-
-.PHONY: register-eigen-operator
-register-eigen-operator:
-	@echo "Registering Operator to EigenLayer"
-	@eigenlayer operator register operator.yaml
-
-
-.PHONY: list-keys
-list-keys:
-	@eigenlayer operator keys list
-
-
-
