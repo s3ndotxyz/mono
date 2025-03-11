@@ -1,1 +1,0 @@
-sudo docker run --device /dev/sgx_enclave --device /dev/sgx_provision -v /var/run/aesmd/:/var/run/aesmd/ --security-opt seccomp=seccomp.json -i -t ef1fb29cff18 /bin/bash
