@@ -20,9 +20,9 @@
   <a href="https://github.com/0xZeroLabs/s3n/blob/master/LICENSE"><img src="https://img.shields.io/github/license/0xZeroLabs/s3n?style=for-the-badge&color=ffb4a2&labelColor=201a19"></a>
 </p>
 
-# S3N Σ, 🏁
+# S3N 🟂
 
-S3N aims to be the first self-sovereign data wallet. A self-sovereign data wallet is one that gives apps high-level access to private web2 data directly at the wallet level with the user's control.
+S3N is a TEE as a Service network.
 
 # 🎯 Grand Plan
 
