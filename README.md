@@ -21,6 +21,4 @@
 <br>
 </p>
 
-# S3N ✦
-
-S3N is a TEE as a Service Network. By abstracting the complexities of TEE management, S3N allows developers to focus on their core business logic while gaining the benefits of hardware-based security. 
+<p align="center"> S3N ✦ is a TEE as a Service Network, abstracting the complexities of TEE management, allowing developers to focus on their core business logic while gaining the benefits of hardware-based security </p>
